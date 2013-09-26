@@ -1,0 +1,22 @@
+name: StBukkitLib
+version: 1.0
+description: Set of useful Bukkit-API related classes
+depend: []
+softdepend: [WorldEdit]
+author: Stealth2800
+website: http://stealthyone.com/
+main: com.stealthyone.mcb.stbukkitlib.StBukkitLib
+commands:
+  stbukkitlib:
+    description: 'Base plugin command'
+    usage: '/<command>'
+    aliases: [stbl,stbukkit,stlib]
+  'yes':
+    description: 'Verification - yes response'
+    usage: '/<command>'
+  'no':
+    description: 'Verification - no response'
+    usage: '/<command>'
+  debug:
+    description: 'Debug command'
+    usage: '/<command>'

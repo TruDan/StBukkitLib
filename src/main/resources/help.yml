@@ -1,0 +1,5 @@
+help:
+  cmd:
+    help:
+      self:
+        - '&6Description - &e/command'
