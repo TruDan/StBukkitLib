@@ -70,7 +70,7 @@ public final class StBukkitLib extends JavaPlugin {
 		return instance;
 	}
 	
-	public final static String UPDATE_URL = "somelink";
+	public final static String UPDATE_URL = "http://dev.bukkit.org/server-mods/stbukkitlib/files.rss";
 	
 	private Logger logger;
 
@@ -110,10 +110,13 @@ public final class StBukkitLib extends JavaPlugin {
 		
 		/* Register commands */
 		getCommand("stbukkitlib").setExecutor(new CmdStBukkitLib(this));
-        if (ConfigHelper.DISABLE_VERIFICATION.getBoolean()) {
+        if (!ConfigHelper.DISABLE_VERIFICATION.getBoolean()) {
             CmdVerify cmdVerify = new CmdVerify(this);
             getCommand("yes").setExecutor(cmdVerify);
             getCommand("no").setExecutor(cmdVerify);
+            Log.info("Verification API enabled.");
+        } else {
+            Log.info("Verification API disabled.");
         }
         //getCommand("debug").setExecutor(new CmdDebug(this));
 

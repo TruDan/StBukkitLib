@@ -1,15 +1,15 @@
 package com.stealthyone.mcb.stbukkitlib.lib.messages;
 
-import java.io.File;
-import java.util.List;
-
+import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
 import com.stealthyone.mcb.stbukkitlib.config.ConfigHelper;
+import com.stealthyone.mcb.stbukkitlib.lib.storage.YamlFileManager;
+import com.stealthyone.mcb.stbukkitlib.lib.utils.FileUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.stealthyone.mcb.stbukkitlib.lib.storage.YamlFileManager;
-import com.stealthyone.mcb.stbukkitlib.lib.utils.FileUtils;
+import java.io.File;
+import java.util.List;
 
 public final class MessageRetriever {
 
@@ -21,6 +21,7 @@ public final class MessageRetriever {
 	}
 	
 	public MessageRetriever(JavaPlugin plugin, String fileName) {
+        Log.debug("MessageRetriever, plugin is null: " + (plugin == null));
 		this.plugin = plugin;
 		messageFile = new YamlFileManager(new File(plugin.getDataFolder() + File.separator + fileName));
 		if (!messageFile.getFile().exists() || messageFile.isEmpty()) {

@@ -1,17 +1,15 @@
 package com.stealthyone.mcb.stbukkitlib;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
+import com.stealthyone.mcb.stbukkitlib.lib.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
-import com.stealthyone.mcb.stbukkitlib.lib.utils.StringUtils;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 public final class UpdateChecker {
 	

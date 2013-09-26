@@ -5,6 +5,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,20 +23,26 @@ public class HookManager {
 
     public final void loadHooks() {
         List<String> unhookedPlugins = new ArrayList<String>();
-        try {
-            worldedit = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
+
+        Plugin rawWorldedit = Bukkit.getPluginManager().getPlugin("WorldEdit");
+        if (rawWorldedit != null) {
+            worldedit = (WorldEditPlugin) rawWorldedit;
             Log.info("Hooked with " + worldedit.getName() + " v" + worldedit.getDescription().getVersion());
-        } catch (Exception ex) {
+        } else {
             worldedit = null;
             unhookedPlugins.add("WorldEdit");
         }
-        try {
-            worldguard = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
+
+
+        Plugin rawWorldguard = Bukkit.getPluginManager().getPlugin("WorldGuard");
+        if (rawWorldguard != null) {
+            worldguard = (WorldGuardPlugin) rawWorldguard;
             Log.info("Hooked with " + worldguard.getName() + " v" + worldguard.getDescription().getVersion());
-        } catch (Exception ex) {
+        } else {
             worldguard = null;
             unhookedPlugins.add("WorldGuard");
         }
+
         if (unhookedPlugins.size() > 0) {
             Log.info("Unable to hook with optional dependencies (" + unhookedPlugins.size() + "): " + unhookedPlugins.toString().replace("[", "").replace("]", ""));
         }

@@ -11,6 +11,7 @@ public enum ErrorMessage implements IMessagePath {
     ID_INVALID,
     ID_MUST_BE_INT,
     PENDING_VERIFICATION_OF_SAME_TYPE,
+    NO_PERMISSION,
 	NO_PENDING_VERIFICATION;
 	
 	private final String PREFIX = "messages.errors.";

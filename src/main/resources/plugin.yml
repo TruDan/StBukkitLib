@@ -1,8 +1,8 @@
 name: StBukkitLib
-version: 1.0
+version: 1.0.1
 description: Set of useful Bukkit-API related classes
 depend: []
-softdepend: [WorldEdit]
+softdepend: [WorldEdit,WorldGuard]
 author: Stealth2800
 website: http://stealthyone.com/
 main: com.stealthyone.mcb.stbukkitlib.StBukkitLib

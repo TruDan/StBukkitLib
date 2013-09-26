@@ -4,6 +4,7 @@ import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.lib.verification.Verifiable;
 import com.stealthyone.mcb.stbukkitlib.messages.ErrorMessage;
 import com.stealthyone.mcb.stbukkitlib.messages.UsageMessage;
+import com.stealthyone.mcb.stbukkitlib.permissions.PermissionNode;
 import com.stealthyone.mcb.stbukkitlib.verification.VerificationManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -21,6 +22,11 @@ public class CmdVerify implements CommandExecutor {
     }
 
     public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!PermissionNode.VERIFICATION.isAllowed(sender)) {
+            ErrorMessage.NO_PERMISSION.sendTo(sender);
+            return true;
+        }
+
         String playerName = sender.getName().toLowerCase();
         VerificationManager verificationManager = plugin.getVerificationManager();
         List<Verifiable> playerList = verificationManager.getVerifiables(playerName);
