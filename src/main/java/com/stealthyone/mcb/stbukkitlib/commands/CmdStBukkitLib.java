@@ -1,12 +1,11 @@
 package com.stealthyone.mcb.stbukkitlib.commands;
 
+import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
+import com.stealthyone.mcb.stbukkitlib.lib.updates.UpdateChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-
-import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
-import com.stealthyone.mcb.stbukkitlib.UpdateChecker;
 
 public final class CmdStBukkitLib implements CommandExecutor {
 
@@ -40,7 +39,7 @@ public final class CmdStBukkitLib implements CommandExecutor {
 		sender.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GOLD + " v" + plugin.getVersion());
 		sender.sendMessage(ChatColor.GOLD + "Created by " + plugin.getDescription().getAuthors());
 		sender.sendMessage(ChatColor.GOLD + "Website: " + ChatColor.AQUA + plugin.getDescription().getWebsite());
-		UpdateChecker updateChecker = new UpdateChecker(plugin);
+		UpdateChecker updateChecker = plugin.getUpdateChecker();
 		if (updateChecker.isUpdateNeeded()) {
 			String curVer = plugin.getVersion();
 			String remVer = updateChecker.getNewVersion();

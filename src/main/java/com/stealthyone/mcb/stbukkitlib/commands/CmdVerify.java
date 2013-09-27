@@ -5,7 +5,7 @@ import com.stealthyone.mcb.stbukkitlib.lib.verification.Verifiable;
 import com.stealthyone.mcb.stbukkitlib.messages.ErrorMessage;
 import com.stealthyone.mcb.stbukkitlib.messages.UsageMessage;
 import com.stealthyone.mcb.stbukkitlib.permissions.PermissionNode;
-import com.stealthyone.mcb.stbukkitlib.verification.VerificationManager;
+import com.stealthyone.mcb.stbukkitlib.lib.backend.verification.VerificationManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

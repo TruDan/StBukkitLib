@@ -7,8 +7,16 @@ import com.stealthyone.mcb.stbukkitlib.hooks.HookManager;
 
 public final class HookHelper {
 
-    private final static HookManager getHookManager() {
+    public final static HookManager getHookManager() {
         return StBukkitLib.getInstance().getHookManager();
+    }
+
+    /**
+     * Returns whether or not VanishNoPacket is hooked
+     * @return
+     */
+    public final static boolean hookVanishNoPacket() {
+        return getHookManager().hoookedWithVanishNoPacket();
     }
 
     /**

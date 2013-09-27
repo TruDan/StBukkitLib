@@ -1,4 +1,4 @@
-package com.stealthyone.mcb.stbukkitlib.verification;
+package com.stealthyone.mcb.stbukkitlib.lib.backend.verification;
 
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;

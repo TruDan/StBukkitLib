@@ -26,10 +26,12 @@ import com.stealthyone.mcb.stbukkitlib.commands.CmdStBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.commands.CmdVerify;
 import com.stealthyone.mcb.stbukkitlib.config.ConfigHelper;
 import com.stealthyone.mcb.stbukkitlib.hooks.HookManager;
+import com.stealthyone.mcb.stbukkitlib.lib.backend.autosaving.AutosaveManager;
+import com.stealthyone.mcb.stbukkitlib.lib.backend.verification.VerificationManager;
 import com.stealthyone.mcb.stbukkitlib.lib.items.ItemRightClickable;
 import com.stealthyone.mcb.stbukkitlib.lib.messages.MessageRetriever;
+import com.stealthyone.mcb.stbukkitlib.lib.updates.UpdateChecker;
 import com.stealthyone.mcb.stbukkitlib.listeners.PlayerListener;
-import com.stealthyone.mcb.stbukkitlib.verification.VerificationManager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -70,15 +72,15 @@ public final class StBukkitLib extends JavaPlugin {
 		return instance;
 	}
 	
-	public final static String UPDATE_URL = "http://dev.bukkit.org/server-mods/stbukkitlib/files.rss";
-	
 	private Logger logger;
 
     private MessageRetriever messageRetriever;
+    private UpdateChecker updateChecker;
 
 	private Map<String, ItemRightClickable> rightClickableItems = new HashMap<String, ItemRightClickable>();
 
     private HookManager hookManager;
+    private AutosaveManager autosaveManager;
     private VerificationManager verificationManager;
 
 	@Override
@@ -99,9 +101,8 @@ public final class StBukkitLib extends JavaPlugin {
         messageRetriever = new MessageRetriever(this);
 
         hookManager = new HookManager(this);
+        autosaveManager = new AutosaveManager(this);
         verificationManager = new VerificationManager(this);
-
-        hookManager.loadHooks();
 
         PluginManager pluginManager = getServer().getPluginManager();
 
@@ -120,7 +121,8 @@ public final class StBukkitLib extends JavaPlugin {
         }
         //getCommand("debug").setExecutor(new CmdDebug(this));
 
-		getServer().getScheduler().runTaskTimerAsynchronously(this, new UpdateCheckRunnable(this), 40, 432000);
+        updateChecker = UpdateChecker.scheduleForMe(this, "http://dev.bukkit.org/server-mods/stbukkitlib/files.rss");
+
 		Log.info(String.format("%s v%s by Stealth2800 enabled.", getName(), getVersion()));
 	}
 	
@@ -137,6 +139,10 @@ public final class StBukkitLib extends JavaPlugin {
         return messageRetriever;
     }
 
+    public final UpdateChecker getUpdateChecker() {
+        return updateChecker;
+    }
+
 	public final Map<String, ItemRightClickable> getRightClickableItems() {
 		return rightClickableItems;
 	}
@@ -148,6 +154,10 @@ public final class StBukkitLib extends JavaPlugin {
 
     public final HookManager getHookManager() {
         return hookManager;
+    }
+
+    public final AutosaveManager getAutosaveManager() {
+        return autosaveManager;
     }
 
     public final VerificationManager getVerificationManager() {

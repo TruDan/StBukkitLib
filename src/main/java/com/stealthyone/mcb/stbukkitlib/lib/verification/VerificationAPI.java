@@ -2,7 +2,7 @@ package com.stealthyone.mcb.stbukkitlib.lib.verification;
 
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.messages.ErrorMessage;
-import com.stealthyone.mcb.stbukkitlib.verification.VerificationManager;
+import com.stealthyone.mcb.stbukkitlib.lib.backend.verification.VerificationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
