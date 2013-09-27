@@ -1,4 +1,4 @@
-package com.stealthyone.mcb.stbukkitlib.hooks;
+package com.stealthyone.mcb.stbukkitlib.lib.backend.hooks;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;

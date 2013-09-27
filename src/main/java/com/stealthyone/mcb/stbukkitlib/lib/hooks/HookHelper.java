@@ -3,7 +3,7 @@ package com.stealthyone.mcb.stbukkitlib.lib.hooks;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
-import com.stealthyone.mcb.stbukkitlib.hooks.HookManager;
+import com.stealthyone.mcb.stbukkitlib.lib.backend.hooks.HookManager;
 
 public final class HookHelper {
 

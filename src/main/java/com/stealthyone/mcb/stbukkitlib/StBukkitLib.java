@@ -25,7 +25,7 @@ package com.stealthyone.mcb.stbukkitlib;
 import com.stealthyone.mcb.stbukkitlib.commands.CmdStBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.commands.CmdVerify;
 import com.stealthyone.mcb.stbukkitlib.config.ConfigHelper;
-import com.stealthyone.mcb.stbukkitlib.hooks.HookManager;
+import com.stealthyone.mcb.stbukkitlib.lib.backend.hooks.HookManager;
 import com.stealthyone.mcb.stbukkitlib.lib.backend.autosaving.AutosaveManager;
 import com.stealthyone.mcb.stbukkitlib.lib.backend.verification.VerificationManager;
 import com.stealthyone.mcb.stbukkitlib.lib.items.ItemRightClickable;
