@@ -52,13 +52,23 @@ public final class UpdateChecker {
 	public final String getVersionLink() {
 		return versionLink;
 	}
-	
-	public final void checkForUpdates() {
+
+    public final boolean checkForUpdates() {
+        return checkForUpdates(true);
+    }
+
+	public final boolean checkForUpdates(boolean log) {
 		try {
 			String updateLink = updateUrl;
 			String curVersion = plugin.getDescription().getVersion();
-			if (updateLink.equalsIgnoreCase("somelink") || StringUtils.containsMultiple(curVersion, "SNAPSHOT", "BETA", "ALPHA")) {
-				logger.log(Level.INFO, "Currently running a snapshot, beta, or alpha build. Update check cancelled.");
+			if (!plugin.getConfig().getBoolean("Check for updates", false)) {
+                if (log) {
+                    logger.log(Level.INFO, "Update checker disabled. Enable it in the config to be alerted of new version of the plugin.");
+                }
+            } else if (updateLink.equalsIgnoreCase("somelink") || StringUtils.containsMultiple(curVersion, "SNAPSHOT", "BETA", "ALPHA")) {
+                if (log) {
+				    logger.log(Level.INFO, "Currently running a snapshot, beta, or alpha build. Update check cancelled.");
+                }
 				updateNeeded = false;
 			} else {
 				URL filesFeed = new URL(updateLink);
@@ -74,10 +84,14 @@ public final class UpdateChecker {
 				versionLink = children.item(3).getTextContent();
 				
 				updateNeeded = !curVersion.equals(newVersion);
+                return updateNeeded;
 			}
 		} catch (Exception e) {
-            logger.log(Level.INFO, "Unable to check for updates! (" + e.getClass().getName() + ")");
+            if (log) {
+                logger.log(Level.INFO, "Unable to check for updates! (" + e.getClass().getName() + ")");
+            }
 		}
+        return false;
 	}
 	
 }
