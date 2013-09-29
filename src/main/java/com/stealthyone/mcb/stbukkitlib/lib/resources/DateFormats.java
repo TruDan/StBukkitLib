@@ -12,6 +12,6 @@ import java.text.SimpleDateFormat;
 
 public final class DateFormats {
 
-	public final static SimpleDateFormat STANDARD = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
-	
+    public final static SimpleDateFormat STANDARD = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+
 }

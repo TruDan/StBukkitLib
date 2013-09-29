@@ -55,7 +55,8 @@ public class VerificationManager {
         if (!(playerList == null || playerList.size() == 0)) {
             try {
                 playerList.remove(id);
-            } catch (IndexOutOfBoundsException ex) {}
+            } catch (IndexOutOfBoundsException ex) {
+            }
         }
     }
 

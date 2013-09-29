@@ -15,6 +15,7 @@ public final class VerificationAPI {
 
     /**
      * Registers a verifiable for a player
+     *
      * @param playerName
      * @param verifiable
      * @return True if successful, false if player already has pending verifiable
@@ -36,6 +37,7 @@ public final class VerificationAPI {
 
     /**
      * Returns the latest verifiable for a player
+     *
      * @param playerName
      * @return Null if player doesn't have any verifiables
      */

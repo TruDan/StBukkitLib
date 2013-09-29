@@ -17,33 +17,35 @@ import java.util.List;
 
 public final class InventoryIO {
 
-	/**
-	 * Saves an inventory to a configuration section. File save function should be called after this
-	 * @param inventory Inventory to save
-	 * @param config ConfigurationSection to save inventory in
-	 */
-	public final static void saveToConfigSection(Inventory inventory, ConfigurationSection config) {
-		config.set("title", inventory.getName());
-		config.set("size", inventory.getSize());
-		config.set("items", inventory.getContents());
-	}
-	
-	/**
-	 * Loads from configuration section by using 'title', 'size', and 'items' as the sections it reads
-	 * @param config ConfigurationSection to load from
-	 * @return New inventory instance that was just loaded
-	 */
-	public final static Inventory loadFromConfigSection(ConfigurationSection config) {
-		String title = config.getString("title");
-		int size = config.getInt("size");
-		Inventory inventory = title.equalsIgnoreCase("") ? Bukkit.createInventory(null, size) : Bukkit.createInventory(null, size, title);
-		
-		List<?> list = config.getList("items");
-		for (int i = 0; i < size; i++) {
-			if (list.get(i) != null)
-				inventory.setItem(i, (ItemStack) list.get(i));
-		}
-		return inventory;
-	}
-	
+    /**
+     * Saves an inventory to a configuration section. File save function should be called after this
+     *
+     * @param inventory Inventory to save
+     * @param config    ConfigurationSection to save inventory in
+     */
+    public final static void saveToConfigSection(Inventory inventory, ConfigurationSection config) {
+        config.set("title", inventory.getName());
+        config.set("size", inventory.getSize());
+        config.set("items", inventory.getContents());
+    }
+
+    /**
+     * Loads from configuration section by using 'title', 'size', and 'items' as the sections it reads
+     *
+     * @param config ConfigurationSection to load from
+     * @return New inventory instance that was just loaded
+     */
+    public final static Inventory loadFromConfigSection(ConfigurationSection config) {
+        String title = config.getString("title");
+        int size = config.getInt("size");
+        Inventory inventory = title.equalsIgnoreCase("") ? Bukkit.createInventory(null, size) : Bukkit.createInventory(null, size, title);
+
+        List<?> list = config.getList("items");
+        for (int i = 0; i < size; i++) {
+            if (list.get(i) != null)
+                inventory.setItem(i, (ItemStack) list.get(i));
+        }
+        return inventory;
+    }
+
 }

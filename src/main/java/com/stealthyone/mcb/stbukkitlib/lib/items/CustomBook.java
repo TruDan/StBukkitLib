@@ -12,27 +12,27 @@ public class CustomBook extends CustomItem {
         super(Material.WRITTEN_BOOK);
     }
 
-	public CustomBook(ItemStack stack) {
-		super(stack);
-	}
-	
-	public List<String> getPages() {
-		BookMeta meta = (BookMeta) getItemMeta();
-		
-		return meta.getPages();
-	}
-	
-	public void setPages(List<String> pages) {
-		BookMeta meta = (BookMeta) getItemMeta();
-		meta.setPages(pages);
-		setItemMeta(meta);
-	}
-	
-	public void addPages(String... pages) {
-		BookMeta meta = (BookMeta) getItemMeta();
-		meta.addPage(pages);
-		setItemMeta(meta);
-	}
+    public CustomBook(ItemStack stack) {
+        super(stack);
+    }
+
+    public List<String> getPages() {
+        BookMeta meta = (BookMeta) getItemMeta();
+
+        return meta.getPages();
+    }
+
+    public void setPages(List<String> pages) {
+        BookMeta meta = (BookMeta) getItemMeta();
+        meta.setPages(pages);
+        setItemMeta(meta);
+    }
+
+    public void addPages(String... pages) {
+        BookMeta meta = (BookMeta) getItemMeta();
+        meta.addPage(pages);
+        setItemMeta(meta);
+    }
 
     public String getAuthor() {
         return ((BookMeta) getItemMeta()).getAuthor();

@@ -11,24 +11,24 @@ import org.bukkit.inventory.InventoryHolder;
 
 public class ChestInterface implements InventoryHolder {
 
-	protected Inventory inventory;
-	
-	protected final ConfigurationSection storageSection;
-	protected final YamlFileManager storageFile;
-	
-	public ChestInterface(final int size, final String title) {
-		this(size, title, null, null);
-	}
-	
-	public ChestInterface(final ConfigurationSection conf, final YamlFileManager file) {
-		this(conf.getInt("size"), conf.getString("title"), conf, file);
-	}
-	
-	public ChestInterface(final int size, final String title, final ConfigurationSection conf, final YamlFileManager file) {
-		inventory = Bukkit.createInventory(this, size, title);
-		storageSection = conf;
-		storageFile = file;
-	}
+    protected Inventory inventory;
+
+    protected final ConfigurationSection storageSection;
+    protected final YamlFileManager storageFile;
+
+    public ChestInterface(final int size, final String title) {
+        this(size, title, null, null);
+    }
+
+    public ChestInterface(final ConfigurationSection conf, final YamlFileManager file) {
+        this(conf.getInt("size"), conf.getString("title"), conf, file);
+    }
+
+    public ChestInterface(final int size, final String title, final ConfigurationSection conf, final YamlFileManager file) {
+        inventory = Bukkit.createInventory(this, size, title);
+        storageSection = conf;
+        storageFile = file;
+    }
 
     public final void loadFromStorage() {
         if (storageSection == null)
@@ -55,9 +55,9 @@ public class ChestInterface implements InventoryHolder {
             storageFile.saveFile();
     }
 
-	public final Inventory getInventory() {
-		return inventory;
-	}
+    public final Inventory getInventory() {
+        return inventory;
+    }
 
     public final void openInventory(Player player) {
         player.openInventory(inventory);

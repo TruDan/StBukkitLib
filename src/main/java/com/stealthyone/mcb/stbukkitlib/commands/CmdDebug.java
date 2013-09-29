@@ -27,6 +27,7 @@ public class CmdDebug implements CommandExecutor {
 
     /**
      * Handler for list potions command
+     *
      * @param sender
      * @param command
      * @param label

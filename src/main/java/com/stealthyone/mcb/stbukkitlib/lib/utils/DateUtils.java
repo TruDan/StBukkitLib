@@ -13,20 +13,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public final class DateUtils {
-	
-	/**
-	 * Converts a date to string with a specified format
-	 * @param date
-	 * @param format
-	 * @return
-	 */
-	public final static Date stringToDate(String date, SimpleDateFormat format) {
-		try {
-			return format.parse(date);
-		} catch (ParseException ex) {
-			ex.printStackTrace();
-			return null;
-		}
-	}
-	
+
+    /**
+     * Converts a date to string with a specified format
+     *
+     * @param date
+     * @param format
+     * @return
+     */
+    public final static Date stringToDate(String date, SimpleDateFormat format) {
+        try {
+            return format.parse(date);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
 }

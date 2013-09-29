@@ -31,6 +31,7 @@ public final class RandomUtils {
 
     /**
      * Generates a random integer within a specified range
+     *
      * @param min
      * @param max
      * @return

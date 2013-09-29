@@ -42,60 +42,61 @@ import java.util.logging.Logger;
 
 public final class StBukkitLib extends JavaPlugin {
 
-	public final static class Log {
-		
-		public final static void debug(String msg) {
-			if (ConfigHelper.DEBUG.getBoolean())
-				instance.logger.log(Level.INFO, String.format("[%s DEBUG] %s", instance.getName(), msg));
-		}
-		
-		public final static void info(String msg) {
-			instance.logger.log(Level.INFO, String.format("[%s] %s", instance.getName(), msg));
-		}
-		
-		public final static void warning(String msg) {
-			instance.logger.log(Level.WARNING, String.format("[%s] %s", instance.getName(), msg));
-		}
-		
-		public final static void severe(String msg) {
-			instance.logger.log(Level.SEVERE, String.format("[%s] %s", instance.getName(), msg));
-		}
-		
-	}
-	
-	private static StBukkitLib instance;
-	{
-		instance = this;
-	}
-	
-	public final static StBukkitLib getInstance() {
-		return instance;
-	}
-	
-	private Logger logger;
+    public final static class Log {
+
+        public final static void debug(String msg) {
+            if (ConfigHelper.DEBUG.getBoolean())
+                instance.logger.log(Level.INFO, String.format("[%s DEBUG] %s", instance.getName(), msg));
+        }
+
+        public final static void info(String msg) {
+            instance.logger.log(Level.INFO, String.format("[%s] %s", instance.getName(), msg));
+        }
+
+        public final static void warning(String msg) {
+            instance.logger.log(Level.WARNING, String.format("[%s] %s", instance.getName(), msg));
+        }
+
+        public final static void severe(String msg) {
+            instance.logger.log(Level.SEVERE, String.format("[%s] %s", instance.getName(), msg));
+        }
+
+    }
+
+    private static StBukkitLib instance;
+
+    {
+        instance = this;
+    }
+
+    public final static StBukkitLib getInstance() {
+        return instance;
+    }
+
+    private Logger logger;
 
     private MessageRetriever messageRetriever;
     private UpdateChecker updateChecker;
 
-	private Map<String, ItemRightClickable> rightClickableItems = new HashMap<String, ItemRightClickable>();
+    private Map<String, ItemRightClickable> rightClickableItems = new HashMap<String, ItemRightClickable>();
 
     private HookManager hookManager;
     private AutosaveManager autosaveManager;
     private VerificationManager verificationManager;
 
-	@Override
-	public final void onLoad() {
-		logger = getServer().getLogger();
-		if (!getDataFolder().exists())
-			getDataFolder().mkdir();
-	}
-	
-	@Override
-	public final void onEnable() {
-		/* Setup config */
-		saveDefaultConfig();
-		getConfig().options().copyDefaults(false);
-		saveConfig();
+    @Override
+    public final void onLoad() {
+        logger = getServer().getLogger();
+        if (!getDataFolder().exists())
+            getDataFolder().mkdir();
+    }
+
+    @Override
+    public final void onEnable() {
+        /* Setup config */
+        saveDefaultConfig();
+        getConfig().options().copyDefaults(false);
+        saveConfig();
 		
 		/* Setup important plugin parts */
         messageRetriever = new MessageRetriever(this);
@@ -107,10 +108,10 @@ public final class StBukkitLib extends JavaPlugin {
         PluginManager pluginManager = getServer().getPluginManager();
 
 		/* Register listeners */
-		pluginManager.registerEvents(new PlayerListener(this), this);
+        pluginManager.registerEvents(new PlayerListener(this), this);
 		
 		/* Register commands */
-		getCommand("stbukkitlib").setExecutor(new CmdStBukkitLib(this));
+        getCommand("stbukkitlib").setExecutor(new CmdStBukkitLib(this));
         if (!ConfigHelper.DISABLE_VERIFICATION.getBoolean()) {
             CmdVerify cmdVerify = new CmdVerify(this);
             getCommand("yes").setExecutor(cmdVerify);
@@ -123,17 +124,17 @@ public final class StBukkitLib extends JavaPlugin {
 
         updateChecker = UpdateChecker.scheduleForMe(this, "http://dev.bukkit.org/server-mods/stbukkitlib/files.rss");
 
-		Log.info(String.format("%s v%s by Stealth2800 enabled.", getName(), getVersion()));
-	}
-	
-	@Override
-	public final void onDisable() {
-		Log.info(String.format("%s v%s by Stealth2800 disabled.", getName(), getVersion()));
-	}
-	
-	public final String getVersion() {
-		return getDescription().getVersion();
-	}
+        Log.info(String.format("%s v%s by Stealth2800 enabled.", getName(), getVersion()));
+    }
+
+    @Override
+    public final void onDisable() {
+        Log.info(String.format("%s v%s by Stealth2800 disabled.", getName(), getVersion()));
+    }
+
+    public final String getVersion() {
+        return getDescription().getVersion();
+    }
 
     public final MessageRetriever getMessageManager() {
         return messageRetriever;
@@ -143,14 +144,14 @@ public final class StBukkitLib extends JavaPlugin {
         return updateChecker;
     }
 
-	public final Map<String, ItemRightClickable> getRightClickableItems() {
-		return rightClickableItems;
-	}
-	
-	public final void registerRightClickableItem(ItemRightClickable item) {
-		rightClickableItems.put(item.getName(), item);
-		Log.info("Registered right clickable item: " + item.getClass().getName());
-	}
+    public final Map<String, ItemRightClickable> getRightClickableItems() {
+        return rightClickableItems;
+    }
+
+    public final void registerRightClickableItem(ItemRightClickable item) {
+        rightClickableItems.put(item.getName(), item);
+        Log.info("Registered right clickable item: " + item.getClass().getName());
+    }
 
     public final HookManager getHookManager() {
         return hookManager;

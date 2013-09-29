@@ -19,7 +19,7 @@ public class HookManager {
     private WorldEditPlugin worldedit;
     private WorldGuardPlugin worldguard;
 
-    public HookManager(StBukkitLib plugin)  {
+    public HookManager(StBukkitLib plugin) {
         this.plugin = plugin;
         loadHooks();
     }

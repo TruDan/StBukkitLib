@@ -18,6 +18,7 @@ public class ItemUtils {
 
     /**
      * Returns a colored leather armor piece
+     *
      * @param material
      * @param color
      * @return

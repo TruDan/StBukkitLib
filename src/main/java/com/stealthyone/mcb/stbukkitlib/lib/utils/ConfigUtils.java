@@ -18,6 +18,7 @@ public class ConfigUtils {
      * Gets a location from a string
      * Format: world|x|y|z|yaw|pitch
      * Format: String|int|int|int|float|float
+     *
      * @param input
      * @return Null if input is null or has 0 length
      */
@@ -41,6 +42,7 @@ public class ConfigUtils {
      * Converts a location to a string
      * Format: world|x|y|z|yaw|pitch
      * Format: String|int|int|int|float|float
+     *
      * @param input
      * @return
      */

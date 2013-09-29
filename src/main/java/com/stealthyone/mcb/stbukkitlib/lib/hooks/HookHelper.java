@@ -13,6 +13,7 @@ public final class HookHelper {
 
     /**
      * Returns whether or not VanishNoPacket is hooked
+     *
      * @return
      */
     public final static boolean hookVanishNoPacket() {
@@ -21,6 +22,7 @@ public final class HookHelper {
 
     /**
      * Returns a WorldEdit hook
+     *
      * @return Null if not hooked
      */
     public final static WorldEditPlugin getWorldEdit() {
@@ -29,6 +31,7 @@ public final class HookHelper {
 
     /**
      * Returns a WorldGuard hook
+     *
      * @return Null if not hooked
      */
     public final static WorldGuardPlugin getWorldGuard() {

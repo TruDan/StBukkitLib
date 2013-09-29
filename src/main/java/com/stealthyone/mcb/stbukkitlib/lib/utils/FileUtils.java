@@ -18,27 +18,28 @@ import java.io.OutputStream;
 
 public final class FileUtils {
 
-	/**
-	 * Copies a file from the plugin .jar to the datafolder
-	 * @param plugin
-	 * @param fileName
-	 */
-	public final static void copyGenericFileFromJar(JavaPlugin plugin, String fileName) {
-		YamlFileManager file = new YamlFileManager(new File(plugin.getDataFolder() + File.separator + fileName));
-		InputStream in = plugin.getResource(fileName);
+    /**
+     * Copies a file from the plugin .jar to the datafolder
+     *
+     * @param plugin
+     * @param fileName
+     */
+    public final static void copyGenericFileFromJar(JavaPlugin plugin, String fileName) {
+        YamlFileManager file = new YamlFileManager(new File(plugin.getDataFolder() + File.separator + fileName));
+        InputStream in = plugin.getResource(fileName);
 
-		try {
-			OutputStream out = new FileOutputStream(file.getFile());
-			byte[] buf = new byte[1024];
-			int len;
-			while ((len = in.read(buf)) > 0) {
-				out.write(buf, 0, len);
-			}
-			out.close();
-			in.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            OutputStream out = new FileOutputStream(file.getFile());
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.close();
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

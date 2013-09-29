@@ -12,10 +12,11 @@ public class AutosavingAPI {
 
     /**
      * Registers an autosavable
-     * @param plugin Plugin owning autosavable
-     * @param name Name of autosavable
+     *
+     * @param plugin      Plugin owning autosavable
+     * @param name        Name of autosavable
      * @param autosavable Autosavable object
-     * @param seconds Seconds to autosave
+     * @param seconds     Seconds to autosave
      */
     public final static void registerAutosavable(JavaPlugin plugin, String name, Autosavable autosavable, int seconds) {
         getAutosaveManager().registerAutosavable(plugin, name, autosavable, seconds);
