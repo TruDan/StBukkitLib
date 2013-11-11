@@ -1,25 +1,35 @@
-package com.stealthyone.mcb.stbukkitlib.lib.backend.hooks;
+package com.stealthyone.mcb.stbukkitlib.backend.hooks;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
+import net.milkbowl.vault.Vault;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
+import ru.tehkode.permissions.PermissionManager;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HookManager {
+public class HookBackend {
 
     private StBukkitLib plugin;
 
     private boolean vanishHook;
+    private PermissionManager permEx;
+
+    private Economy economy;
+    private Vault vault;
+
     private WorldEditPlugin worldedit;
     private WorldGuardPlugin worldguard;
 
-    public HookManager(StBukkitLib plugin) {
+    public HookBackend(StBukkitLib plugin) {
         this.plugin = plugin;
         loadHooks();
     }
@@ -28,6 +38,15 @@ public class HookManager {
         List<String> unhookedPlugins = new ArrayList<String>();
         PluginManager pluginManager = Bukkit.getPluginManager();
 
+        Plugin rawPermEx = pluginManager.getPlugin("PermissionsEx");
+        if (rawPermEx != null) {
+            permEx = PermissionsEx.getPermissionManager();
+            Log.info("Hooked with " + rawPermEx.getName() + " v" + rawPermEx.getDescription().getVersion());
+        } else {
+            permEx = null;
+            unhookedPlugins.add("PermissionsEx");
+        }
+
         Plugin rawVanish = pluginManager.getPlugin("VanishNoPacket");
         if (rawVanish != null) {
             vanishHook = true;
@@ -35,6 +54,23 @@ public class HookManager {
         } else {
             vanishHook = false;
             unhookedPlugins.add("VanishNoPacket");
+        }
+
+        Plugin rawVault = pluginManager.getPlugin("Vault");
+        if (rawVault != null) {
+            Log.info("Hooked with " + rawVault.getName() + " v" + rawVault.getDescription().getVersion());
+            RegisteredServiceProvider<Economy> economyProvider = Bukkit.getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+            if (economyProvider != null) {
+                economy = economyProvider.getProvider();
+                Plugin ecoPlugin = economyProvider.getPlugin();
+                Log.info("Hooked via Vault with economy plugin " + ecoPlugin.getName() + " v" + ecoPlugin.getDescription().getVersion());
+            } else {
+                economy = null;
+                Log.info("Unable to find economy plugin via Vault API.");
+                unhookedPlugins.add("Vault-Economy plugin");
+            }
+        } else {
+            unhookedPlugins.add("Vault");
         }
 
         Plugin rawWorldedit = pluginManager.getPlugin("WorldEdit");
@@ -61,7 +97,11 @@ public class HookManager {
         }
     }
 
-    public final boolean hoookedWithVanishNoPacket() {
+    public final PermissionManager getPermissionsEx() {
+        return permEx;
+    }
+
+    public final boolean hookedWithVanishNoPacket() {
         return vanishHook;
     }
 
@@ -71,6 +111,10 @@ public class HookManager {
 
     public final WorldGuardPlugin getWorldGuard() {
         return worldguard;
+    }
+
+    public final Economy getVaultEconomy() {
+        return economy;
     }
 
 }

@@ -25,8 +25,13 @@ public final class PlayerListener implements Listener {
                 String clickedItemName = clickedItem.getItemMeta().getDisplayName();
                 if (clickedItemName != null) {
                     ItemRightClickable registeredType = plugin.getRightClickableItems().get(clickedItemName);
-                    if (registeredType != null)
+                    if (registeredType != null) {
                         registeredType.rightClicked(e);
+                    } else {
+                        Class<? extends ItemRightClickable> clazz = plugin.getRightClickableItemClasses().get(clickedItem.getClass().getName());
+                        if (clazz != null)
+                            clazz.cast(clickedItem).rightClicked(e);
+                    }
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.stealthyone.mcb.stbukkitlib.lib.backend.autosaving;
+package com.stealthyone.mcb.stbukkitlib.backend.autosaving;
 
 import com.stealthyone.mcb.stbukkitlib.lib.autosaving.Autosavable;
 

@@ -8,11 +8,16 @@ import org.bukkit.command.CommandSender;
 
 public enum ErrorMessage implements IMessagePath {
 
+    HELP_INVALID_PAGE,
+    HELP_UNKNOWN_TOPIC,
+
     ID_INVALID,
     ID_MUST_BE_INT,
     PENDING_VERIFICATION_OF_SAME_TYPE,
     NO_PERMISSION,
-    NO_PENDING_VERIFICATION;
+    NO_PENDING_VERIFICATION,
+
+    UNKNOWN_COMMAND;
 
     private final String PREFIX = "messages.errors.";
 

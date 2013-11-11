@@ -1,4 +1,4 @@
-package com.stealthyone.mcb.stbukkitlib.lib.backend.verification;
+package com.stealthyone.mcb.stbukkitlib.backend.verification;
 
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
@@ -9,13 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class VerificationManager {
+public class VerificationBackend {
 
     private StBukkitLib plugin;
 
     private Map<String, List<Verifiable>> loadedVerifiables = new HashMap<String, List<Verifiable>>();
 
-    public VerificationManager(StBukkitLib plugin) {
+    public VerificationBackend(StBukkitLib plugin) {
         this.plugin = plugin;
     }
 

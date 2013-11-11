@@ -2,15 +2,15 @@ package com.stealthyone.mcb.stbukkitlib.lib.verification;
 
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.messages.ErrorMessage;
-import com.stealthyone.mcb.stbukkitlib.lib.backend.verification.VerificationManager;
+import com.stealthyone.mcb.stbukkitlib.backend.verification.VerificationBackend;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 
 public final class VerificationAPI {
 
-    private final static VerificationManager getVerificationManager() {
-        return StBukkitLib.getInstance().getVerificationManager();
+    private final static VerificationBackend getVerificationManager() {
+        return StBukkitLib.getInstance().getVerificationBackend();
     }
 
     /**
@@ -31,7 +31,7 @@ public final class VerificationAPI {
                 }
             }
         } else if (Bukkit.getOfflinePlayer(playerName).isOnline()) {
-            Bukkit.getOfflinePlayer(playerName).getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', verifiable.getQuestion()));
+            Bukkit.getOfflinePlayer(playerName).getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', verifiable.getQuestion() + ChatColor.DARK_RED + " /yes" + ChatColor.RED + " or " + ChatColor.DARK_RED + "/no"));
         }
     }
 

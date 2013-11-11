@@ -9,10 +9,12 @@
 package com.stealthyone.mcb.stbukkitlib.lib.storage;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class InventoryIO {
@@ -46,6 +48,18 @@ public final class InventoryIO {
                 inventory.setItem(i, (ItemStack) list.get(i));
         }
         return inventory;
+    }
+
+    public final static List<ItemStack> getItemstackList(List rawList) {
+        List<ItemStack> returnList = new ArrayList<ItemStack>();
+        for (int i = 0; i < rawList.size(); i++) {
+            if (rawList.get(i) != null) {
+                returnList.add((ItemStack) rawList.get(i));
+            } else {
+                returnList.add(new ItemStack(Material.AIR));
+            }
+        }
+        return returnList;
     }
 
 }

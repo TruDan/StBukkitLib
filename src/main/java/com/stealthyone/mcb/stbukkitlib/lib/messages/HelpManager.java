@@ -1,13 +1,13 @@
 package com.stealthyone.mcb.stbukkitlib.lib.messages;
 
-import java.util.List;
-
+import com.stealthyone.mcb.stbukkitlib.lib.storage.JarYamlFileManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.stealthyone.mcb.stbukkitlib.lib.storage.JarYamlFileManager;
+import java.util.List;
 
+@Deprecated
 public class HelpManager {
 
     private JavaPlugin plugin;
@@ -20,7 +20,7 @@ public class HelpManager {
 
     public HelpManager(JavaPlugin plugin, String fileName) {
         this.plugin = plugin;
-        helpFile = new JarYamlFileManager(plugin, fileName);
+        //helpFile = new JarYamlFileManager(plugin, fileName);
         //helpFile.reloadFile();
     }
 

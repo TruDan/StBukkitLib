@@ -41,7 +41,7 @@ public final class MessageRetriever {
     }
 
     public final String getTag(boolean raw) {
-        String tag = messageFile.getConfig().getString("TAG");
+        String tag = messageFile.getConfig().getString("TAG", "&6[{PLUGINNAME}] ");
         return raw ? tag : ChatColor.translateAlternateColorCodes('&', tag).replace("{PLUGINNAME}", plugin.getName());
     }
 
@@ -56,7 +56,7 @@ public final class MessageRetriever {
             String string = messageFile.getConfig().getString(path);
             returnString = (string == null) ? null : new String[]{string};
         }
-        String className = message.toString() + (ConfigHelper.DEBUG.getBoolean() ? " (" + message.getClass().getName() + ")" : "");
+        String className = message.toString().toLowerCase() + (ConfigHelper.DEBUG.getBoolean() ? " (" + message.getClass().getName() + ")" : "");
         return returnString == null ? new String[]{className} : returnString;
     }
 }

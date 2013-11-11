@@ -3,6 +3,7 @@ package com.stealthyone.mcb.stbukkitlib.lib.updates;
 import com.stealthyone.mcb.stbukkitlib.config.ConfigHelper;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class UpdateCheckRunnable implements Runnable {
@@ -26,16 +27,15 @@ public final class UpdateCheckRunnable implements Runnable {
 
     @Override
     public final void run() {
-        String logPrefix = "[" + plugin.getName() + "] ";
         if (ConfigHelper.CHECK_FOR_UPDATES.getBoolean()) {
             updateChecker.checkForUpdates();
             if (updateChecker.isUpdateNeeded()) {
-                logger.info(logPrefix + "Found a different version on BukkitDev! (Remote: " + updateChecker.getNewVersion() + " | Current: " + plugin.getDescription().getVersion() + ")");
-                logger.info(logPrefix + "You can download it from: " + updateChecker.getVersionLink());
+                logger.log(Level.INFO, "Found a different version on BukkitDev! (Remote: " + updateChecker.getNewVersion() + " | Current: " + plugin.getDescription().getVersion() + ")");
+                logger.log(Level.INFO, "You can download it from: " + updateChecker.getVersionLink());
             }
         } else {
-            logger.info(logPrefix + "Update checker is disabled, enable in config for auto update checking.");
-            logger.info(logPrefix + "You can also check for updates by typing the version command.");
+            logger.log(Level.INFO, "Update checker is disabled, enable in config for auto update checking.");
+            logger.log(Level.INFO, "You can also check for updates by typing the version command.");
         }
     }
 

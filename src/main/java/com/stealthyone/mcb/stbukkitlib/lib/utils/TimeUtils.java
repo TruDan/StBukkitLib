@@ -17,25 +17,25 @@ public final class TimeUtils {
         hours = hours - days * 24;
         StringBuilder returnString = new StringBuilder();
         if (days > 0) {
-            returnString.append(days + (days > 1 || days == 0 ? " days" : " day"));
+            returnString.append(days).append(days == 1 ? " day" : " days");
         }
         if (hours > 0) {
             if (days > 0) {
                 returnString.append(" ");
             }
-            returnString.append(hours + (hours > 1 || hours == 0 ? " hours" : " hour"));
+            returnString.append(hours).append(hours == 1 ? " hour" : " hours");
         }
         if (minutes > 0) {
             if (hours > 0) {
                 returnString.append(" ");
             }
-            returnString.append(minutes + (minutes > 1 || minutes == 0 ? " minutes" : " minute"));
+            returnString.append(minutes).append(minutes == 1 ? " minute" : " minutes");
         }
-        if (seconds >= 0 && seconds == 0 && days == 0 && hours == 0 && minutes == 0) {
+        if (seconds > 0 || seconds == 0 && minutes == 0 && hours == 0 && days == 0) {
             if (minutes > 0) {
                 returnString.append(" ");
             }
-            returnString.append(seconds + (seconds > 1 || seconds == 0 ? " seconds" : " second"));
+            returnString.append(seconds).append(seconds == 1 ? " second" : " seconds");
         }
 
         return returnString.toString();

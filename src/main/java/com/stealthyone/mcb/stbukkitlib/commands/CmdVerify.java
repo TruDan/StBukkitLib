@@ -5,7 +5,7 @@ import com.stealthyone.mcb.stbukkitlib.lib.verification.Verifiable;
 import com.stealthyone.mcb.stbukkitlib.messages.ErrorMessage;
 import com.stealthyone.mcb.stbukkitlib.messages.UsageMessage;
 import com.stealthyone.mcb.stbukkitlib.permissions.PermissionNode;
-import com.stealthyone.mcb.stbukkitlib.lib.backend.verification.VerificationManager;
+import com.stealthyone.mcb.stbukkitlib.backend.verification.VerificationBackend;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,18 +28,18 @@ public class CmdVerify implements CommandExecutor {
         }
 
         String playerName = sender.getName().toLowerCase();
-        VerificationManager verificationManager = plugin.getVerificationManager();
-        List<Verifiable> playerList = verificationManager.getVerifiables(playerName);
+        VerificationBackend verificationBackend = plugin.getVerificationBackend();
+        List<Verifiable> playerList = verificationBackend.getVerifiables(playerName);
         if (playerList == null || playerList.size() == 0) {
             ErrorMessage.NO_PENDING_VERIFICATION.sendTo(sender);
         } else if (playerList.size() == 1) {
-            Verifiable verifiable = verificationManager.getLatestVerifiable(playerName);
+            Verifiable verifiable = verificationBackend.getLatestVerifiable(playerName);
             if (label.equalsIgnoreCase("yes")) {
                 verifiable.yes();
             } else if (label.equalsIgnoreCase("no")) {
                 verifiable.no();
             }
-            verificationManager.removeLatestVerifiable(playerName);
+            verificationBackend.removeLatestVerifiable(playerName);
         } else if (args.length < 1) {
             ErrorMessage.PENDING_VERIFICATION_OF_SAME_TYPE.sendTo(sender);
             UsageMessage.VERIFY.sendTo(sender, label);
@@ -69,7 +69,7 @@ public class CmdVerify implements CommandExecutor {
             } else if (label.equalsIgnoreCase("no")) {
                 verifiable.no();
             }
-            verificationManager.removeVerifiable(playerName, id);
+            verificationBackend.removeVerifiable(playerName, id);
         }
         return true;
     }

@@ -3,12 +3,18 @@ package com.stealthyone.mcb.stbukkitlib.lib.hooks;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
-import com.stealthyone.mcb.stbukkitlib.lib.backend.hooks.HookManager;
+import com.stealthyone.mcb.stbukkitlib.backend.hooks.HookBackend;
+import net.milkbowl.vault.economy.Economy;
+import ru.tehkode.permissions.PermissionManager;
 
 public final class HookHelper {
 
-    public final static HookManager getHookManager() {
-        return StBukkitLib.getInstance().getHookManager();
+    public final static HookBackend getHookManager() {
+        return StBukkitLib.getInstance().getHookBackend();
+    }
+
+    public final static PermissionManager getPermissionsEx() {
+        return getHookManager().getPermissionsEx();
     }
 
     /**
@@ -17,7 +23,7 @@ public final class HookHelper {
      * @return
      */
     public final static boolean hookVanishNoPacket() {
-        return getHookManager().hoookedWithVanishNoPacket();
+        return getHookManager().hookedWithVanishNoPacket();
     }
 
     /**
@@ -36,6 +42,10 @@ public final class HookHelper {
      */
     public final static WorldGuardPlugin getWorldGuard() {
         return getHookManager().getWorldGuard();
+    }
+
+    public final static Economy getVaultEconomy() {
+        return getHookManager().getVaultEconomy();
     }
 
 }

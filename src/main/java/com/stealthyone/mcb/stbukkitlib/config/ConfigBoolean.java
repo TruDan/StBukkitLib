@@ -6,6 +6,7 @@ public enum ConfigBoolean {
 
     CHECK_FOR_UPDATES("Check for updates"),
     DEBUG("Debug"),
+    DISABLE_HELP("Disabled components.Help API"),
     DISABLE_VERIFICATION("Disabled components.Verification API");
 
     private String path;

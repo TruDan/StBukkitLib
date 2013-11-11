@@ -6,7 +6,7 @@
  * Licensed under the GNU General Public License v2.0
  * View StBukkitLib.java for a detailed notice message.
  */
-package com.stealthyone.mcb.stbukkitlib.lib.backend.autosaving;
+package com.stealthyone.mcb.stbukkitlib.backend.autosaving;
 
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
@@ -19,13 +19,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
-public class AutosaveManager {
+public class AutosaveBackend {
 
     private StBukkitLib plugin;
 
     private Map<String, Map<String, AutosaveItem>> autosaveItems = new HashMap<String, Map<String, AutosaveItem>>();
 
-    public AutosaveManager(StBukkitLib plugin) {
+    public AutosaveBackend(StBukkitLib plugin) {
         this.plugin = plugin;
     }
 

@@ -31,6 +31,7 @@ public class ItemUtils {
             ItemStack returnItem = new ItemStack(material);
             LeatherArmorMeta meta = (LeatherArmorMeta) returnItem.getItemMeta();
             meta.setColor(color);
+            returnItem.setItemMeta(meta);
             return returnItem;
         }
     }

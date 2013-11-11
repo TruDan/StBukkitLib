@@ -22,12 +22,15 @@
  */
 package com.stealthyone.mcb.stbukkitlib;
 
+import com.stealthyone.mcb.stbukkitlib.backend.autosaving.AutosaveBackend;
+import com.stealthyone.mcb.stbukkitlib.backend.help.HelpBackend;
+import com.stealthyone.mcb.stbukkitlib.backend.hooks.HookBackend;
+import com.stealthyone.mcb.stbukkitlib.backend.verification.VerificationBackend;
 import com.stealthyone.mcb.stbukkitlib.commands.CmdStBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.commands.CmdVerify;
 import com.stealthyone.mcb.stbukkitlib.config.ConfigHelper;
-import com.stealthyone.mcb.stbukkitlib.lib.backend.hooks.HookManager;
-import com.stealthyone.mcb.stbukkitlib.lib.backend.autosaving.AutosaveManager;
-import com.stealthyone.mcb.stbukkitlib.lib.backend.verification.VerificationManager;
+import com.stealthyone.mcb.stbukkitlib.lib.help.HelpAPI;
+import com.stealthyone.mcb.stbukkitlib.lib.help.HelpManager;
 import com.stealthyone.mcb.stbukkitlib.lib.items.ItemRightClickable;
 import com.stealthyone.mcb.stbukkitlib.lib.messages.MessageRetriever;
 import com.stealthyone.mcb.stbukkitlib.lib.updates.UpdateChecker;
@@ -76,19 +79,21 @@ public final class StBukkitLib extends JavaPlugin {
     private Logger logger;
 
     private MessageRetriever messageRetriever;
+    private HelpManager helpManager;
     private UpdateChecker updateChecker;
 
     private Map<String, ItemRightClickable> rightClickableItems = new HashMap<String, ItemRightClickable>();
+    private Map<String, Class<? extends ItemRightClickable>> rightClickableItemClasses = new HashMap<String, Class<? extends ItemRightClickable>>();
 
-    private HookManager hookManager;
-    private AutosaveManager autosaveManager;
-    private VerificationManager verificationManager;
+    private HelpBackend helpBackend;
+    private HookBackend hookBackend;
+    private AutosaveBackend autosaveBackend;
+    private VerificationBackend verificationBackend;
 
     @Override
     public final void onLoad() {
         logger = getServer().getLogger();
-        if (!getDataFolder().exists())
-            getDataFolder().mkdir();
+        getDataFolder().mkdir();
     }
 
     @Override
@@ -101,11 +106,14 @@ public final class StBukkitLib extends JavaPlugin {
 		/* Setup important plugin parts */
         messageRetriever = new MessageRetriever(this);
 
-        hookManager = new HookManager(this);
-        autosaveManager = new AutosaveManager(this);
-        verificationManager = new VerificationManager(this);
+        helpBackend = new HelpBackend(this);
+        hookBackend = new HookBackend(this);
+        autosaveBackend = new AutosaveBackend(this);
+        verificationBackend = new VerificationBackend(this);
 
         PluginManager pluginManager = getServer().getPluginManager();
+
+        helpManager = HelpAPI.registerHelp(this);
 
 		/* Register listeners */
         pluginManager.registerEvents(new PlayerListener(this), this);
@@ -119,6 +127,12 @@ public final class StBukkitLib extends JavaPlugin {
             Log.info("Verification API enabled.");
         } else {
             Log.info("Verification API disabled.");
+        }
+
+        if (!ConfigHelper.DISABLE_HELP.getBoolean()) {
+            Log.info("Help API enabled.");
+        } else {
+            Log.info("Help API disabled.");
         }
         //getCommand("debug").setExecutor(new CmdDebug(this));
 
@@ -140,29 +154,52 @@ public final class StBukkitLib extends JavaPlugin {
         return messageRetriever;
     }
 
+    public final HelpManager getHelpIndexer() {
+        return helpManager;
+    }
+
     public final UpdateChecker getUpdateChecker() {
         return updateChecker;
     }
 
+    @Deprecated
     public final Map<String, ItemRightClickable> getRightClickableItems() {
         return rightClickableItems;
     }
 
+    public final Map<String, Class<? extends ItemRightClickable>> getRightClickableItemClasses() {
+        return rightClickableItemClasses;
+    }
+
+    @Deprecated
     public final void registerRightClickableItem(ItemRightClickable item) {
         rightClickableItems.put(item.getName(), item);
         Log.info("Registered right clickable item: " + item.getClass().getName());
     }
 
-    public final HookManager getHookManager() {
-        return hookManager;
+    public final void registerRightClickableItem(Class<? extends ItemRightClickable> clazz) {
+        rightClickableItemClasses.put(clazz.getName(), clazz);
+        Log.info("Registered right clickable item class: " + clazz.getName());
     }
 
-    public final AutosaveManager getAutosaveManager() {
-        return autosaveManager;
+    public final HelpBackend getHelpBackend() {
+        return helpBackend;
     }
 
-    public final VerificationManager getVerificationManager() {
-        return verificationManager;
+    public final HelpManager getHelpManager() {
+        return helpManager;
+    }
+
+    public final HookBackend getHookBackend() {
+        return hookBackend;
+    }
+
+    public final AutosaveBackend getAutosaveBackend() {
+        return autosaveBackend;
+    }
+
+    public final VerificationBackend getVerificationBackend() {
+        return verificationBackend;
     }
 
 }

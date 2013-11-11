@@ -16,7 +16,6 @@ public class InputUtils {
 
     /**
      * Gets a string from input arguments from a command
-     *
      * @param args
      * @param fromIndex
      * @return

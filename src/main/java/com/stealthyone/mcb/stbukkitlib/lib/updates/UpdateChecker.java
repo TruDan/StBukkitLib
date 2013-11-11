@@ -63,7 +63,8 @@ public final class UpdateChecker {
             String curVersion = plugin.getDescription().getVersion();
             if (!plugin.getConfig().getBoolean("Check for updates", false)) {
                 if (log) {
-                    logger.log(Level.INFO, "Update checker disabled. Enable it in the config to be alerted of new version of the plugin.");
+                    logger.log(Level.INFO, "Update checker is disabled, enable in config for auto update checking.");
+                    logger.log(Level.INFO, "You can also check for updates by typing the version command.");
                 }
             } else if (updateLink.equalsIgnoreCase("somelink") || StringUtils.containsMultiple(curVersion, "SNAPSHOT", "BETA", "ALPHA")) {
                 if (log) {

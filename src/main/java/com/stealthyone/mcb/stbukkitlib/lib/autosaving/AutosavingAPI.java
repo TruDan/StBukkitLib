@@ -1,13 +1,13 @@
 package com.stealthyone.mcb.stbukkitlib.lib.autosaving;
 
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
-import com.stealthyone.mcb.stbukkitlib.lib.backend.autosaving.AutosaveManager;
+import com.stealthyone.mcb.stbukkitlib.backend.autosaving.AutosaveBackend;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AutosavingAPI {
 
-    private final static AutosaveManager getAutosaveManager() {
-        return StBukkitLib.getInstance().getAutosaveManager();
+    private final static AutosaveBackend getAutosaveManager() {
+        return StBukkitLib.getInstance().getAutosaveBackend();
     }
 
     /**

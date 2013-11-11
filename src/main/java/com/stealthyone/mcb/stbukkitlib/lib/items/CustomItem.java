@@ -1,7 +1,6 @@
 package com.stealthyone.mcb.stbukkitlib.lib.items;
 
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
-import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -10,8 +9,13 @@ import java.util.List;
 
 public class CustomItem extends ItemStack {
 
+    @Deprecated
     public final static void registerRightClickableItem(ItemRightClickable item) {
         StBukkitLib.getInstance().registerRightClickableItem(item);
+    }
+
+    public final static void registerRightClickableItem(Class<? extends ItemRightClickable> clazz) {
+        StBukkitLib.getInstance().registerRightClickableItem(clazz);
     }
 
     /**
@@ -41,7 +45,7 @@ public class CustomItem extends ItemStack {
      *
      * @param name Name to set for the item
      */
-    public final void setName(String name) {
+    public void setName(String name) {
         ItemMeta meta = getItemMeta();
         meta.setDisplayName(name);
         setItemMeta(meta);
@@ -61,11 +65,9 @@ public class CustomItem extends ItemStack {
      *
      * @param lore List of strings to set as lore. New item in list = new line
      */
-    public final void setLore(List<String> lore) {
+    public void setLore(List<String> lore) {
         ItemMeta meta = getItemMeta();
-        Log.debug("Before set: " + meta.getLore().toString());
         meta.setLore(lore);
-        Log.debug("After set: " + meta.getLore().toString());
         setItemMeta(meta);
     }
 
@@ -75,7 +77,7 @@ public class CustomItem extends ItemStack {
      *
      * @param lore
      */
-    public final void addLore(List<String> lore) {
+    public void addLore(List<String> lore) {
         ItemMeta meta = getItemMeta();
         List<String> currentLore;
         if (meta.hasLore()) {
@@ -92,7 +94,7 @@ public class CustomItem extends ItemStack {
      *
      * @return Null if item doesn't have any lore
      */
-    public final List<String> getLore() {
+    public List<String> getLore() {
         return getItemMeta().getLore();
     }
 

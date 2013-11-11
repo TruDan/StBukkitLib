@@ -2,6 +2,7 @@ package com.stealthyone.mcb.stbukkitlib.commands;
 
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.lib.updates.UpdateChecker;
+import com.stealthyone.mcb.stbukkitlib.messages.ErrorMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,20 +18,38 @@ public final class CmdStBukkitLib implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        cmdVersion(sender, command, label, args);
-        /*if (args.length > 0) {
+        if (args.length > 0) {
 			switch (args[0]) {
-				default: case "version":
+                case "help":
+                    cmdHelp(sender, command, label, args);
+                    return true;
+
+				default:
+                    ErrorMessage.UNKNOWN_COMMAND.sendTo(sender);
+                    return true;
+
+                case "version":
 					cmdVersion(sender, command, label, args);
 					return true;
 			}
-		}*/
+		}
+        cmdVersion(sender, command, label, args);
         return true;
     }
 
     /**
+     * Handler for help command
+     * @param sender
+     * @param command
+     * @param label
+     * @param args
+     */
+    private final void cmdHelp(CommandSender sender, Command command, String label, String[] args) {
+        plugin.getHelpManager().handleHelpCommand(sender, null, label, args, 1);
+    }
+
+    /**
      * Command handler for version command
-     *
      * @param sender
      * @param command
      * @param label
