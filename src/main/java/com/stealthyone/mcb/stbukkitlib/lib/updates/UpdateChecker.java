@@ -85,6 +85,10 @@ public final class UpdateChecker {
                 versionLink = children.item(3).getTextContent();
 
                 updateNeeded = !curVersion.equals(newVersion);
+                if (updateNeeded && log) {
+                    logger.log(Level.INFO, "Found a different version on BukkitDev! (Remote: " + newVersion + " | Current: " + curVersion + ")");
+                    logger.log(Level.INFO, "You can download it from: " + versionLink);
+                }
                 return updateNeeded;
             }
         } catch (Exception e) {
