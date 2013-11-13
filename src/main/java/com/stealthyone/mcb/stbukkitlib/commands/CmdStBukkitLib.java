@@ -1,7 +1,6 @@
 package com.stealthyone.mcb.stbukkitlib.commands;
 
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
-import com.stealthyone.mcb.stbukkitlib.lib.updates.UpdateChecker;
 import com.stealthyone.mcb.stbukkitlib.messages.ErrorMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -59,13 +58,13 @@ public final class CmdStBukkitLib implements CommandExecutor {
         sender.sendMessage(ChatColor.GREEN + plugin.getName() + ChatColor.GOLD + " v" + plugin.getVersion());
         sender.sendMessage(ChatColor.GOLD + "Created by " + plugin.getDescription().getAuthors());
         sender.sendMessage(ChatColor.GOLD + "Website: " + ChatColor.AQUA + plugin.getDescription().getWebsite());
-        UpdateChecker updateChecker = plugin.getUpdateChecker();
-        if (updateChecker.isUpdateNeeded()) {
+        /*Updater updateChecker = plugin.getUpdater();
+        if (updateChecker.getResult() == UpdateResult.UPDATE_AVAILABLE) {
             String curVer = plugin.getVersion();
-            String remVer = updateChecker.getNewVersion();
+            String remVer = updateChecker.getLatestName().replace("v", "");
             sender.sendMessage(ChatColor.RED + "A different version was found on BukkitDev! (Current: " + curVer + " | Remote: " + remVer + ")");
-            sender.sendMessage(ChatColor.RED + "You can download it from " + updateChecker.getVersionLink());
-        }
+            sender.sendMessage(ChatColor.RED + "You can download it from " + updateChecker.getLatestFileLink());
+        }*/
     }
 
 }
