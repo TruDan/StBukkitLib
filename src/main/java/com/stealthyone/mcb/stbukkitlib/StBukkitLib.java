@@ -33,7 +33,7 @@ import com.stealthyone.mcb.stbukkitlib.lib.help.HelpAPI;
 import com.stealthyone.mcb.stbukkitlib.lib.help.HelpManager;
 import com.stealthyone.mcb.stbukkitlib.lib.items.ItemRightClickable;
 import com.stealthyone.mcb.stbukkitlib.lib.messages.MessageRetriever;
-import com.stealthyone.mcb.stbukkitlib.lib.updates.Updater;
+import com.stealthyone.mcb.stbukkitlib.lib.updates.UpdateChecker;
 import com.stealthyone.mcb.stbukkitlib.listeners.PlayerListener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -80,7 +80,7 @@ public final class StBukkitLib extends JavaPlugin {
 
     private MessageRetriever messageRetriever;
     private HelpManager helpManager;
-    private Updater updater;
+    private UpdateChecker updateChecker;
 
     private Map<String, ItemRightClickable> rightClickableItems = new HashMap<String, ItemRightClickable>();
     private Map<String, Class<? extends ItemRightClickable>> rightClickableItemClasses = new HashMap<String, Class<? extends ItemRightClickable>>();
@@ -135,7 +135,7 @@ public final class StBukkitLib extends JavaPlugin {
             Log.info("Help API disabled.");
         }
         //getCommand("debug").setExecutor(new CmdDebug(this));
-
+        updateChecker = UpdateChecker.scheduleForMe(this, 66225);
         Log.info(String.format("%s v%s by Stealth2800 enabled.", getName(), getVersion()));
     }
 
@@ -156,8 +156,8 @@ public final class StBukkitLib extends JavaPlugin {
         return helpManager;
     }
 
-    public final Updater getUpdater() {
-        return updater;
+    public final UpdateChecker getUpdateChecker() {
+        return updateChecker;
     }
 
     @Deprecated
