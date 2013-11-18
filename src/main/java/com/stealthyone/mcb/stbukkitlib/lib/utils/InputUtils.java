@@ -34,4 +34,15 @@ public class InputUtils {
         return sb.toString();
     }
 
+    public final static boolean getInputBoolean(String input) {
+        input = input.toLowerCase();
+        switch (input) {
+            case "true":case "yes":
+                return true;
+            case "false":case "no":
+                return false;
+        }
+        throw new IllegalArgumentException("Unable to parse input to boolean '" + input + "' (accepted values: true/yes/false/no");
+    }
+
 }
