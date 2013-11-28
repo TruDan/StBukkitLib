@@ -116,14 +116,15 @@ public class HelpManager {
 
             int pageCount = section.getPageCount();
             String command = "/" + label + " " + ArrayUtils.stringArrayToString(args, 0, lastCharNum ? args.length - 1 : args.length);
-            if (section.hasSubTopics() && pageNum <= pageCount) {
-                sender.sendMessage(ChatColor.DARK_RED + "Type " + ChatColor.RED + command + " <topic> [page]" + ChatColor.DARK_RED + " to access another topic.");
-            }
+            if (customTopicIndex > 0) {
+                if (section.hasSubTopics() && pageNum <= pageCount) {
+                    sender.sendMessage(ChatColor.DARK_RED + "Type " + ChatColor.RED + command + " <topic> [page]" + ChatColor.DARK_RED + " to access another topic.");
+                }
 
-            if (pageNum < pageCount) {
-                sender.sendMessage(ChatColor.DARK_RED + "Type " + ChatColor.RED + command + " " + (pageNum + 1) + ChatColor.DARK_RED + " to access the next page.");
+                if (pageNum < pageCount) {
+                    sender.sendMessage(ChatColor.DARK_RED + "Type " + ChatColor.RED + command + " " + (pageNum + 1) + ChatColor.DARK_RED + " to access the next page.");
+                }
             }
-
         }
     }
 

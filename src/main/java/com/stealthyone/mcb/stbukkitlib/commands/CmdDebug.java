@@ -1,11 +1,17 @@
 package com.stealthyone.mcb.stbukkitlib.commands;
 
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
-import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
+import com.stealthyone.mcb.stbukkitlib.lib.storage.YamlFileManager;
+import com.stealthyone.mcb.stbukkitlib.messages.ErrorMessage;
+import com.stealthyone.mcb.stbukkitlib.permissions.PermissionNode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
+
+import java.io.File;
+import java.util.Date;
 
 public class CmdDebug implements CommandExecutor {
 
@@ -17,9 +23,18 @@ public class CmdDebug implements CommandExecutor {
 
     @Override
     public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!PermissionNode.DEBUG.isAllowed(sender)) {
+            ErrorMessage.NO_PERMISSION.sendTo(sender);
+            return true;
+        }
+
         switch (args[0]) {
             case "potions":
                 cmdPotions(sender, command, label, args);
+                return true;
+
+            case "saveinv":
+                cmdSaveInv(sender, command, label, args);
                 return true;
         }
         return true;
@@ -44,6 +59,25 @@ public class CmdDebug implements CommandExecutor {
             }
         }
         sender.sendMessage(message.toString());
+    }
+
+    /**
+     * Handler for save inventory command
+     * @param sender
+     * @param command
+     * @param label
+     * @param args
+     */
+    private void cmdSaveInv(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("must be player");
+            return;
+        }
+        String fileName = "inv_" + sender.getName() + "-" + new Date().getTime() + ".yml";
+        YamlFileManager file = new YamlFileManager(plugin.getDataFolder() + File.separator + fileName);
+        file.getConfig().set("inventory", ((Player) sender).getInventory().getContents());
+        file.saveFile();
+        sender.sendMessage("saved inventory to " + fileName);
     }
 
 }

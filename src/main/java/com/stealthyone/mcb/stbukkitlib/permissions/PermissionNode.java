@@ -4,6 +4,7 @@ import org.bukkit.command.CommandSender;
 
 public enum PermissionNode {
 
+    DEBUG,
     VERIFICATION;
 
     public final static String PREFIX = "stbukkitlib.";

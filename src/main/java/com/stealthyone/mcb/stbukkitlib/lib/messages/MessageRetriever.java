@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.List;
 
+@Deprecated
 public final class MessageRetriever {
 
     private JavaPlugin plugin;

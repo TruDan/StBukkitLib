@@ -75,7 +75,7 @@ public class UpdateChecker {
                 logger.log(Level.INFO, "You can also check for updates by typing the version command.");
             }
             updateNeeded = false;
-        } else if (url.toString().equalsIgnoreCase("somelink") || StringUtils.containsMultiple(curVersion, "SNAPSHOT", "BETA", "ALPHA")) {
+        } else if (curVersion.equalsIgnoreCase("somelink") || StringUtils.containsMultiple(curVersion, "SNAPSHOT", "BETA", "ALPHA")) {
             if (log) {
                 logger.log(Level.INFO, "Currently running a snapshot, beta, or alpha build. Update check cancelled.");
             }

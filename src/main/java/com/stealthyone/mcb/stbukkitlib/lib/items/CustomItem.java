@@ -26,6 +26,7 @@ public class CustomItem extends ItemStack {
      */
     public CustomItem(ItemStack stack) {
         super(stack);
+        stack = this;
     }
 
     public CustomItem(Material type, int amount, short damage) {

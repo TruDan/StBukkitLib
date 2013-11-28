@@ -26,6 +26,7 @@ import com.stealthyone.mcb.stbukkitlib.backend.autosaving.AutosaveBackend;
 import com.stealthyone.mcb.stbukkitlib.backend.help.HelpBackend;
 import com.stealthyone.mcb.stbukkitlib.backend.hooks.HookBackend;
 import com.stealthyone.mcb.stbukkitlib.backend.verification.VerificationBackend;
+import com.stealthyone.mcb.stbukkitlib.commands.CmdDebug;
 import com.stealthyone.mcb.stbukkitlib.commands.CmdStBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.commands.CmdVerify;
 import com.stealthyone.mcb.stbukkitlib.config.ConfigHelper;
@@ -134,7 +135,7 @@ public final class StBukkitLib extends JavaPlugin {
         } else {
             Log.info("Help API disabled.");
         }
-        //getCommand("debug").setExecutor(new CmdDebug(this));
+        getCommand("debug").setExecutor(new CmdDebug(this));
         updateChecker = UpdateChecker.scheduleForMe(this, 66225);
         Log.info(String.format("%s v%s by Stealth2800 enabled.", getName(), getVersion()));
     }
