@@ -48,11 +48,6 @@
         </dependency>
         <dependency>
             <groupId>unmanaged.bukkit</groupId>
-            <artifactId>permissionsex</artifactId>
-            <version>LATEST</version>
-        </dependency>
-        <dependency>
-            <groupId>unmanaged.bukkit</groupId>
             <artifactId>vanishnopacket</artifactId>
             <version>LATEST</version>
         </dependency>
@@ -64,20 +59,16 @@
     </dependencies>
 
     <scm>
-        <url>https://github.com/stealth2800/stbukkitlib</url>
-        <connection>scm:git:git://github.com/Stealth2800/StBukkitLib.git</connection>
-        <developerConnection>scm:git:git://github.com/Stealth2800/StBukkitLib.git</developerConnection>
+        <connection>scm:svn:http://127.0.0.1/dummy</connection>
+        <developerConnection>scm:svn:https://127.0.0.1/dummy</developerConnection>
+        <tag>HEAD</tag>
+        <url>http://127.0.0.1/dummy</url>
     </scm>
 
     <issueManagement>
-        <system>Github</system>
+        <system>GitHub</system>
         <url>https://github.com/stealth2800/stbukkitlib/issues</url>
     </issueManagement>
-
-    <ciManagement>
-        <system>drone.io</system>
-        <url>https://drone.io/github.com/Stealth2800/StBukkitLib</url>
-    </ciManagement>
 
     <build>
         <resources>
