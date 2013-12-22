@@ -16,10 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.stbukkitlib.lib.autosaving;
+package com.stealthyone.mcb.stbukkitlib.lib.updating;
 
-public interface Autosavable {
+public class UpdateCheckRunnable implements Runnable {
 
-    public void saveAll();
+    private UpdateChecker updateChecker;
+
+    public UpdateCheckRunnable(UpdateChecker updateChecker) {
+        this.updateChecker = updateChecker;
+    }
+
+    @Override
+    public void run() {
+        updateChecker.checkForUpdates(true);
+    }
 
 }

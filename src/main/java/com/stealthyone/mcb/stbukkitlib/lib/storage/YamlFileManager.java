@@ -1,115 +1,82 @@
 /*
- * StBukkitLib - YamlFileManager
+ * StBukkitLib - Set of useful Bukkit-related classes
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- * Website: <http://stealthyone.com/>
+ * Website: <http://google.com/>
  *
- * Licensed under the GNU General Public License v2.0
- * View StBukkitLib.java for a detailed notice message.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.stealthyone.mcb.stbukkitlib.lib.storage;
+
+import org.apache.commons.lang.Validate;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-
-import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
-
-/**
- * Class intended for managing .yml files simply.
- *
- * @author Stealth2800
- */
 public class YamlFileManager {
 
-    private File customFile;
-    private FileConfiguration customConfig;
+    private File file;
+    private FileConfiguration config;
 
-    /**
-     * Constructs a new instance of a YamlFileManager using the path of the file.
-     *
-     * @param filePath Path of File to use.
-     */
     public YamlFileManager(String filePath) {
-        this(new File(filePath));
+        Validate.notNull(filePath);
+        file = new File(filePath);
+        reloadConfig();
     }
 
-    /**
-     * Constructs a new instance of a YamlFileManager using the file itself.
-     *
-     * @param file File to use.
-     */
     public YamlFileManager(File file) {
-        this.customFile = file;
-        this.reloadConfig();
+        Validate.notNull(file);
+        this.file = file;
+        reloadConfig();
     }
 
-    /**
-     * Returns the file this instance is managing.
-     *
-     * @return Raw File.
-     */
-    public final File getFile() {
-        return customFile;
-    }
-
-    /**
-     * Returns the configuration of the file.
-     *
-     * @return FileConfiguration of file's config.
-     */
-    public final FileConfiguration getConfig() {
-        if (customConfig == null) {
-            this.reloadConfig();
-        }
-        return customConfig;
-    }
-
-    /**
-     * Reloads the configuration from the file.
-     * If the file doesn't exist, this method will create it.
-     */
-    public final void reloadConfig() {
-        if (!customFile.exists()) {
+    public void reloadConfig() {
+        if (!file.exists()) {
             try {
-                customFile.createNewFile();
+                file.createNewFile();
                 saveFile();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
-        customConfig = YamlConfiguration.loadConfiguration(customFile);
+        config = YamlConfiguration.loadConfiguration(file);
     }
 
-    /**
-     * Saves the file to the disk.
-     */
-    public final void saveFile() {
-        if (customConfig == null || customFile == null) {
-            Log.debug("(saveFile) - customConfig or customFile is null");
-            this.reloadConfig();
+    public void saveFile() {
+        if (file == null || config == null) {
+            reloadConfig();
         } else {
             try {
-                customConfig.save(customFile);
+                config.save(file);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
     }
 
-    /**
-     * Method to check if the file is empty or not.
-     *
-     * @return True if the file is empty.
-     */
-    public final boolean isEmpty() {
-        return customConfig.getKeys(false).size() == 0;
+    public FileConfiguration getConfig() {
+        return config;
     }
 
-    public final void copyDefaults(FileConfiguration otherConfig) {
-        customConfig.addDefaults(otherConfig);
-        customConfig.options().copyDefaults(true);
+    public boolean isEmpty() {
+        return config.getKeys(false).size() == 0;
+    }
+
+    public void copyDefaults(FileConfiguration otherConfig) {
+        config.addDefaults(otherConfig);
+        config.options().copyDefaults(true);
         saveFile();
     }
 

@@ -1,42 +1,28 @@
 /*
- * StBukkitLib - RandomUtils
+ * StBukkitLib - Set of useful Bukkit-related classes
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- * Website: <http://stealthyone.com/>
+ * Website: <http://google.com/>
  *
- * Licensed under the GNU General Public License v2.0
- * View StBukkitLib.java for a detailed notice message.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.stealthyone.mcb.stbukkitlib.lib.utils;
 
 import java.util.Random;
 
-public final class RandomUtils {
+public class RandomUtils {
 
-    public final static String getRandomString(int length) {
-        return getRandomString(length, false);
-    }
-
-    public final static String getRandomString(int length, boolean withNumbers) {
-        char[] chars = withNumbers ? "abcdefghijklmnopqrstuvwxyz1234567890".toCharArray() : "abcdefghijklmnopqrstuvwxyz".toCharArray();
-
-        StringBuilder sb = new StringBuilder();
-        Random random = new Random();
-        for (int i = 0; i < length; i++) {
-            char c = chars[random.nextInt(chars.length)];
-            sb.append(c);
-        }
-
-        return sb.toString();
-    }
-
-    /**
-     * Generates a random integer within a specified range
-     *
-     * @param min
-     * @param max
-     * @return
-     */
-    public final static int getRandomInt(int min, int max) {
+    public static int getRandomInt(int min, int max) {
         return new Random().nextInt((max - min) + 1) + min;
     }
 

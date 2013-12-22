@@ -1,6 +1,23 @@
+/*
+ * StBukkitLib - Set of useful Bukkit-related classes
+ * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
+ * Website: <http://google.com/>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.stealthyone.mcb.stbukkitlib.lib.items;
 
-import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -9,24 +26,8 @@ import java.util.List;
 
 public class CustomItem extends ItemStack {
 
-    @Deprecated
-    public final static void registerRightClickableItem(ItemRightClickable item) {
-        StBukkitLib.getInstance().registerRightClickableItem(item);
-    }
-
-    public final static void registerRightClickableItem(Class<? extends ItemRightClickable> clazz) {
-        StBukkitLib.getInstance().registerRightClickableItem(clazz);
-    }
-
-    /**
-     * Creates a CustomItem cast for an ItemStack
-     *
-     * @param stack Input ItemStack
-     * @throws IllegalArgumentException Thrown if input ItemStack is null
-     */
-    public CustomItem(ItemStack stack) {
-        super(stack);
-        stack = this;
+    public CustomItem(ItemStack itemStack) {
+        super(itemStack);
     }
 
     public CustomItem(Material type, int amount, short damage) {
@@ -41,43 +42,22 @@ public class CustomItem extends ItemStack {
         this(type, 1);
     }
 
-    /**
-     * Sets the display name of the item
-     *
-     * @param name Name to set for the item
-     */
     public void setName(String name) {
         ItemMeta meta = getItemMeta();
         meta.setDisplayName(name);
         setItemMeta(meta);
     }
 
-    /**
-     * Gets the display name of the item
-     *
-     * @return Null if item doesn't have a display name
-     */
     public String getName() {
         return getItemMeta().getDisplayName();
     }
 
-    /**
-     * REMOVES OLD LORE and adds the new lore
-     *
-     * @param lore List of strings to set as lore. New item in list = new line
-     */
     public void setLore(List<String> lore) {
         ItemMeta meta = getItemMeta();
         meta.setLore(lore);
         setItemMeta(meta);
     }
 
-    /**
-     * ADDS to the existing lore of the item
-     * If item doesn't have lore, creates it
-     *
-     * @param lore
-     */
     public void addLore(List<String> lore) {
         ItemMeta meta = getItemMeta();
         List<String> currentLore;
@@ -90,11 +70,6 @@ public class CustomItem extends ItemStack {
         }
     }
 
-    /**
-     * Returns the existing lore of the item
-     *
-     * @return Null if item doesn't have any lore
-     */
     public List<String> getLore() {
         return getItemMeta().getLore();
     }

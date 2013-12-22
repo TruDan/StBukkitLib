@@ -1,68 +1,44 @@
 /*
- * StBukkitLib - FileUtils
+ * StBukkitLib - Set of useful Bukkit-related classes
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- * Website: <http://stealthyone.com/>
+ * Website: <http://google.com/>
  *
- * Licensed under the GNU General Public License v2.0
- * View StBukkitLib.java for a detailed notice message.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.stealthyone.mcb.stbukkitlib.lib.utils;
 
-import com.stealthyone.mcb.stbukkitlib.lib.storage.YamlFileManager;
+import org.apache.commons.lang.Validate;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 
-public final class FileUtils {
+public class FileUtils {
 
-    /**
-     * Copies a file from the plugin .jar to the datafolder
-     *
-     * @param plugin
-     * @param fileName
-     */
-    public final static void copyGenericFileFromJar(JavaPlugin plugin, String fileName) {
-        YamlFileManager file = new YamlFileManager(new File(plugin.getDataFolder() + File.separator + fileName));
-        InputStream in = plugin.getResource(fileName);
-
-        try {
-            OutputStream out = new FileOutputStream(file.getFile());
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            out.close();
-            in.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static File copyFileFromJar(JavaPlugin plugin, String fileName) throws IOException {
+        return copyFileFromJar(plugin, fileName, plugin.getDataFolder());
     }
 
-    /**
-     * Copies a file from the plugin .jar to a destination folder in the plugin datafolder
-     * @param plugin
-     * @param fileName
-     * @param destDir
-     * @throws IOException
-     */
-    public final static void copyGenericFileFromJar(JavaPlugin plugin, String fileName, String destDir) throws IOException {
-        copyGenericFileFromJar(plugin, fileName, plugin.getDataFolder() + File.separator + destDir);
-    }
-
-    /**
-     * Copies a file from the plugin .jar to a destination folder in the plugin datafolder
-     * @param plugin
-     * @param fileName
-     * @param destDir
-     * @return New YamlFileManager of copied file
-     * @throws IOException
-     */
-    public final static YamlFileManager copyGenericFileFromJar(JavaPlugin plugin, String fileName, File destDir) throws IOException {
-        YamlFileManager file = new YamlFileManager(destDir + File.separator + fileName);
+    public static File copyFileFromJar(JavaPlugin plugin, String fileName, File destination) throws IOException {
+        Validate.notNull(plugin);
+        Validate.notNull(fileName);
+        Validate.notNull(destination);
+        File file = new File(destination + File.separator + fileName);
         InputStream in = plugin.getResource(fileName);
+        if (in == null)
+            throw new FileNotFoundException("Unable to find file '" + fileName + "' in jar for plugin: '" + plugin.getName() + "'");
 
-        OutputStream out = new FileOutputStream(file.getFile());
+        OutputStream out = new FileOutputStream(file);
         byte[] buf = new byte[1024];
         int len;
         while ((len = in.read(buf)) > 0) {

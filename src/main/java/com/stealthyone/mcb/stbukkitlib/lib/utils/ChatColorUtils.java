@@ -18,16 +18,21 @@
  */
 package com.stealthyone.mcb.stbukkitlib.lib.utils;
 
-public class InputUtils {
+import org.bukkit.ChatColor;
 
-    public static boolean getInputBoolean(String input) {
-        switch (input.toLowerCase()) {
-            case "true":case "yes":case "t":case "y":
-                return true;
-            case "false":case "no":case "f":case"n":
-                return false;
-        }
-        throw new IllegalArgumentException("Unable to parse input to boolean '" + input + "' (accepted values: true/t, yes/y, false/f, no/n");
+public class ChatColorUtils {
+
+    public static String colorizeMessage(String message) {
+        message = message.replace("&k", "-k").replace("&m", "-m").replace("&o", "-o").replace("&n", "-n").replace("&l", "-l");
+        return ChatColor.translateAlternateColorCodes('&', message).replace("-k", "&k").replace("-m", "&m").replace("-o", "&o").replace("-n", "&n").replace("-l", "&l");
+    }
+
+    public static String formatMessage(String message) {
+        return message.replace("&l", ChatColor.BOLD.toString()).replace("&n", ChatColor.UNDERLINE.toString()).replace("&o", ChatColor.ITALIC.toString()).replace("&m", ChatColor.STRIKETHROUGH.toString());
+    }
+
+    public static String magicfyMessage(String message) {
+        return message.replace("&k", ChatColor.MAGIC.toString());
     }
 
 }

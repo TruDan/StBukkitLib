@@ -1,22 +1,11 @@
 name: ${project.name}
 version: ${project.version}
-description: Set of useful Bukkit-API related classes
+description: Set of useful Bukkit-related classes
 depend: []
-softdepend: [PermissionsEx,VanishNoPacket,Vault,WorldEdit,WorldGuard]
+softdepend: [WorldEdit, WorldGuard, VanishNoPacket, Vault]
 author: Stealth2800
 website: http://stealthyone.com/bukkit
 main: com.stealthyone.mcb.stbukkitlib.StBukkitLib
 commands:
   stbukkitlib:
-    description: 'Base plugin command'
-    usage: '/<command>'
-    aliases: [stbl,stbukkit,stlib]
-  'yes':
-    description: 'Verification - yes response'
-    usage: '/<command>'
-  'no':
-    description: 'Verification - no response'
-    usage: '/<command>'
-  debug:
-    description: 'Debug command'
-    usage: '/<command>'
+    aliases: [stbl]

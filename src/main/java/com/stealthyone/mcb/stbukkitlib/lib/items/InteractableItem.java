@@ -16,10 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.stbukkitlib.lib.autosaving;
+package com.stealthyone.mcb.stbukkitlib.lib.items;
 
-public interface Autosavable {
+import org.bukkit.event.player.PlayerInteractEvent;
 
-    public void saveAll();
+public interface InteractableItem {
+
+    public String getName();
+
+    public void playerInteract(PlayerInteractEvent e);
 
 }

@@ -16,10 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.stbukkitlib.lib.autosaving;
+package com.stealthyone.mcb.stbukkitlib.backend.items;
 
-public interface Autosavable {
+import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
+import com.stealthyone.mcb.stbukkitlib.lib.items.InteractableItem;
 
-    public void saveAll();
+import java.util.HashMap;
+import java.util.Map;
+
+public class CustomItemManager {
+
+    private StBukkitLib plugin;
+
+    private Map<String, Class<? extends InteractableItem>> interactableItems = new HashMap<String, Class<? extends InteractableItem>>();
+
+    public CustomItemManager(StBukkitLib plugin) {
+        this.plugin = plugin;
+    }
 
 }

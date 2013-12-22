@@ -1,5 +1,1 @@
-Debug: false
-Check for updates: true
-Disabled components:
-  Verification API: false
-  Help API: false
+Debug: true

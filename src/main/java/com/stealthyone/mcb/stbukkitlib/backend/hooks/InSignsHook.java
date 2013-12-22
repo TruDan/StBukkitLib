@@ -16,10 +16,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.stbukkitlib.lib.autosaving;
+package com.stealthyone.mcb.stbukkitlib.backend.hooks;
 
-public interface Autosavable {
+import de.blablubbabc.insigns.Changer;
+import de.blablubbabc.insigns.InSigns;
+import org.bukkit.Bukkit;
 
-    public void saveAll();
+public class InSignsHook extends PluginHook {
+
+    public InSignsHook() {
+        super("InSigns");
+    }
+
+    public InSigns getInSigns() {
+        return (InSigns) Bukkit.getPluginManager().getPlugin("InSigns");
+    }
+
+    public void addChanger(Changer changer) {
+        getInSigns().addChanger(changer);
+    }
 
 }

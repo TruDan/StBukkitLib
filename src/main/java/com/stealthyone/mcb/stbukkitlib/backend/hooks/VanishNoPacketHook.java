@@ -16,10 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.stbukkitlib.lib.autosaving;
+package com.stealthyone.mcb.stbukkitlib.backend.hooks;
 
-public interface Autosavable {
+import org.bukkit.entity.Player;
+import org.kitteh.vanish.VanishPlugin;
 
-    public void saveAll();
+public class VanishNoPacketHook extends PluginHook {
+
+    public VanishNoPacketHook() {
+        super("VanishNoPacket");
+    }
+
+    public boolean isPlayerVanished(Player player) {
+        return ((VanishPlugin) getPlugin()).getManager().isVanished(player);
+    }
 
 }

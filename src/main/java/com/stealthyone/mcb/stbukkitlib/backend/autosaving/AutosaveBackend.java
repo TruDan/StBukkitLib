@@ -1,10 +1,20 @@
 /*
- * StBukkitLib - AutosaveManager
+ * StBukkitLib - Set of useful Bukkit-related classes
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- * Website: <http://stealthyone.com/>
+ * Website: <http://google.com/>
  *
- * Licensed under the GNU General Public License v2.0
- * View StBukkitLib.java for a detailed notice message.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.stealthyone.mcb.stbukkitlib.backend.autosaving;
 
@@ -12,7 +22,6 @@ import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
 import com.stealthyone.mcb.stbukkitlib.lib.autosaving.Autosavable;
 import com.stealthyone.mcb.stbukkitlib.lib.utils.TimeUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -29,24 +38,18 @@ public class AutosaveBackend {
         this.plugin = plugin;
     }
 
-    public final void registerAutosavable(JavaPlugin plugin, String name, final Autosavable autosavable, int seconds) {
+    public void registerAutosavable(JavaPlugin plugin, String name, final Autosavable autosavable, int seconds) {
         Map<String, AutosaveItem> autosavables = getAutosaveItems(plugin.getName());
         if (autosavables == null) {
             autosavables = new HashMap<String, AutosaveItem>();
         }
-        AutosaveItem newItem = new AutosaveItem(plugin.getName(), name, autosavable, seconds);
+        AutosaveItem newItem = new AutosaveItem(plugin, name, autosavable, seconds);
         autosavables.put(name.toLowerCase(), newItem);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            @Override
-            public final void run() {
-                autosavable.saveAll();
-            }
-        }, seconds * 20, seconds * 20);
         Log.debug("Registered autosavable: " + name + " from plugin: " + plugin.getClass().getName());
         plugin.getLogger().log(Level.INFO, String.format("Autosaving started, set to run every %s.", TimeUtils.translateSeconds(seconds)));
     }
 
-    public final Map<String, AutosaveItem> getAutosaveItems(String pluginName) {
+    public Map<String, AutosaveItem> getAutosaveItems(String pluginName) {
         return autosaveItems.get(pluginName.toLowerCase());
     }
 

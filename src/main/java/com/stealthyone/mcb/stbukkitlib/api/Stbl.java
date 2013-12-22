@@ -16,10 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.stbukkitlib.lib.autosaving;
+package com.stealthyone.mcb.stbukkitlib.api;
 
-public interface Autosavable {
+import com.stealthyone.mcb.stbukkitlib.backend.autosaving.AutosaveBackend;
+import com.stealthyone.mcb.stbukkitlib.backend.hooks.HookManager;
+import com.stealthyone.mcb.stbukkitlib.backend.players.PlayerIdManager;
 
-    public void saveAll();
+public class Stbl {
+
+    public static AutosaveBackend autosaving;
+    public static HookManager hooks;
+    public static PlayerIdManager playerIds;
 
 }

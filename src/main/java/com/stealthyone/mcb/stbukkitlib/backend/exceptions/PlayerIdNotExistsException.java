@@ -16,10 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.stbukkitlib.lib.autosaving;
+package com.stealthyone.mcb.stbukkitlib.backend.exceptions;
 
-public interface Autosavable {
+public class PlayerIdNotExistsException extends RuntimeException {
 
-    public void saveAll();
+    public PlayerIdNotExistsException(String playerName) {
+        super("No ID saved for player: '" + playerName + "'!");
+    }
 
 }
