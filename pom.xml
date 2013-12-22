@@ -29,44 +29,44 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>[1.7,)</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
-            <version>1.2.27</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
-            <version>[5.5,)</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>[5.8,)</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>unmanaged.bukkit</groupId>
             <artifactId>permissionsex</artifactId>
-            <version>[1.2,)</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>unmanaged.bukkit</groupId>
             <artifactId>vanishnopacket</artifactId>
-            <version>[3.18,)</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>unmanaged.bukkit</groupId>
             <artifactId>insigns</artifactId>
-            <version>[1.0,)</version>
+            <version>LATEST</version>
         </dependency>
     </dependencies>
 
     <scm>
         <url>https://github.com/stealth2800/stbukkitlib</url>
-        <connection>scm:git:https://github.com/Stealth2800/StBukkitLib.git</connection>
-        <developerConnection>scm:git:https://github.com/Stealth2800/StBukkitLib.git</developerConnection>
+        <connection>scm:git:git://github.com/Stealth2800/StBukkitLib.git</connection>
+        <developerConnection>scm:git:git://github.com/Stealth2800/StBukkitLib.git</developerConnection>
     </scm>
 
     <issueManagement>
