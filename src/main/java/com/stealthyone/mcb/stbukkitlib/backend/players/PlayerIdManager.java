@@ -34,7 +34,8 @@ public class PlayerIdManager {
     private StBukkitLib plugin;
 
     private YamlFileManager playerIds;
-    private Map<String, UUID> idCache = new HashMap<String, UUID>();
+    private Map<String, String> nameCache = new HashMap<>(); //uuid, name
+    private Map<String, String> idCache = new HashMap<>(); //name, uuid
 
     public PlayerIdManager(StBukkitLib plugin) {
         this.plugin = plugin;
@@ -50,19 +51,28 @@ public class PlayerIdManager {
     }
 
     public String getName(UUID uuid) {
-        return playerIds.getConfig().getString(uuid.toString());
+        if (nameCache.get(uuid.toString()) != null) {
+            return nameCache.get(uuid.toString());
+        }
+
+        String name = playerIds.getConfig().getString(uuid.toString());
+        if (name != null) {
+            nameCache.put(uuid.toString(), name);
+            return name;
+        }
+        return null;
     }
 
     public UUID getUuid(String playerName) {
         if (idCache.get(playerName.toLowerCase()) != null) {
-            return idCache.get(playerName.toLowerCase());
+            return UUID.fromString(idCache.get(playerName.toLowerCase()));
         }
 
         FileConfiguration config = playerIds.getConfig();
         for (String key : config.getKeys(false)) {
             if (config.getString(key).equalsIgnoreCase(playerName)) {
                 UUID uuid = UUID.fromString(key);
-                idCache.put(playerName.toLowerCase(), uuid);
+                idCache.put(playerName.toLowerCase(), uuid.toString());
                 return uuid;
             }
         }
