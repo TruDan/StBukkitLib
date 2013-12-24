@@ -7,5 +7,5 @@ author: Stealth2800
 website: http://stealthyone.com/bukkit
 main: com.stealthyone.mcb.stbukkitlib.StBukkitLib
 commands:
-  stbukkitlib:
-    aliases: [stbl]
+  stbl:
+    aliases: [stbukkitlib, sbl, stlib]
