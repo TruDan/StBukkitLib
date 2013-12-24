@@ -22,13 +22,21 @@ import org.bukkit.ChatColor;
 
 public class ChatColorUtils {
 
+    private static ChatColor[] colors = {ChatColor.RED, ChatColor.DARK_RED, ChatColor.GOLD, ChatColor.YELLOW, ChatColor.GREEN, ChatColor.DARK_GREEN, ChatColor.BLUE, ChatColor.DARK_BLUE, ChatColor.AQUA, ChatColor.DARK_AQUA, ChatColor.LIGHT_PURPLE, ChatColor.DARK_PURPLE, ChatColor.WHITE, ChatColor.GRAY, ChatColor.DARK_GRAY, ChatColor.BLACK};
+    private static ChatColor[] formats = {ChatColor.BOLD, ChatColor.UNDERLINE, ChatColor.ITALIC, ChatColor.STRIKETHROUGH, ChatColor.RESET};
+
     public static String colorizeMessage(String message) {
-        message = message.replace("&k", "-k").replace("&m", "-m").replace("&o", "-o").replace("&n", "-n").replace("&l", "-l");
-        return ChatColor.translateAlternateColorCodes('&', message).replace("-k", "&k").replace("-m", "&m").replace("-o", "&o").replace("-n", "&n").replace("-l", "&l");
+        for (ChatColor color : colors) {
+            message = message.replace("&" + color.getChar(), color.toString());
+        }
+        return message;
     }
 
     public static String formatMessage(String message) {
-        return message.replace("&l", ChatColor.BOLD.toString()).replace("&n", ChatColor.UNDERLINE.toString()).replace("&o", ChatColor.ITALIC.toString()).replace("&m", ChatColor.STRIKETHROUGH.toString());
+        for (ChatColor format : formats) {
+            message =  message.replace("&" + format.getChar(), format.toString());
+        }
+        return message;
     }
 
     public static String magicfyMessage(String message) {
