@@ -21,35 +21,36 @@ package com.stealthyone.mcb.stbukkitlib.backend.autosaving;
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib;
 import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
 import com.stealthyone.mcb.stbukkitlib.lib.autosaving.Autosavable;
-import com.stealthyone.mcb.stbukkitlib.lib.utils.TimeUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 public class AutosaveBackend {
 
     private StBukkitLib plugin;
 
-    private Map<String, Map<String, AutosaveItem>> autosaveItems = new HashMap<String, Map<String, AutosaveItem>>();
+    private Map<String, AutosaveItem> autosaveItems = new HashMap<>();
 
     public AutosaveBackend(StBukkitLib plugin) {
         this.plugin = plugin;
     }
 
-    public void registerAutosavable(JavaPlugin plugin, String name, final Autosavable autosavable, int seconds) {
-        Map<String, AutosaveItem> autosavables = getAutosaveItems(plugin.getName());
-        if (autosavables == null) {
-            autosavables = new HashMap<String, AutosaveItem>();
+    public void registerAutosavable(JavaPlugin plugin, Autosavable autosavable) {
+        if (getAutosaver(plugin) != null) {
+            return;
         }
-        AutosaveItem newItem = new AutosaveItem(plugin, name, autosavable, seconds);
-        autosavables.put(name.toLowerCase(), newItem);
-        Log.debug("Registered autosavable: " + name + " from plugin: " + plugin.getClass().getName());
-        plugin.getLogger().log(Level.INFO, String.format("Autosaving started, set to run every %s.", TimeUtils.translateSeconds(seconds)));
+
+        AutosaveItem newItem = new AutosaveItem(plugin, autosavable);
+        autosaveItems.put(plugin.getName(), newItem);
+        Log.debug("Registered autosavable for plugin: " + plugin.getName());
     }
 
-    public Map<String, AutosaveItem> getAutosaveItems(String pluginName) {
+    public AutosaveItem getAutosaver(JavaPlugin plugin) {
+        return getAutosaver(plugin.getName());
+    }
+
+    public AutosaveItem getAutosaver(String pluginName) {
         return autosaveItems.get(pluginName.toLowerCase());
     }
 

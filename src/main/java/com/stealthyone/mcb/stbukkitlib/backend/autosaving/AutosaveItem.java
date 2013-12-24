@@ -19,22 +19,30 @@
 package com.stealthyone.mcb.stbukkitlib.backend.autosaving;
 
 import com.stealthyone.mcb.stbukkitlib.lib.autosaving.Autosavable;
+import com.stealthyone.mcb.stbukkitlib.lib.utils.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.logging.Level;
 
 public class AutosaveItem {
 
     private JavaPlugin plugin;
-    private String name;
     private Autosavable autosavable;
     private int seconds;
     private int schedulerId;
 
-    public AutosaveItem(JavaPlugin plugin, String name, Autosavable autosavable, int seconds) {
+    public AutosaveItem(JavaPlugin plugin, Autosavable autosavable) {
         this.plugin = plugin;
-        this.name = name;
         this.autosavable = autosavable;
-        this.seconds = seconds;
+        this.seconds = plugin.getConfig().getInt("Autosave interval") * 60;
+        if (seconds <= 0) {
+            plugin.getLogger().log(Level.WARNING, "Autosaver disabled. It is recommended that you enable it to prevent data loss.");
+        } else if (schedule()) {
+            plugin.getLogger().log(Level.INFO, String.format("Autosaving started, set to run every %s.", TimeUtils.translateSeconds(seconds)));
+        } else {
+            plugin.getLogger().log(Level.WARNING, "Unable to start autosaving.");
+        }
     }
 
     public boolean schedule() {
@@ -54,10 +62,6 @@ public class AutosaveItem {
 
     public JavaPlugin getPlugin() {
         return plugin;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Autosavable getAutosavable() {
