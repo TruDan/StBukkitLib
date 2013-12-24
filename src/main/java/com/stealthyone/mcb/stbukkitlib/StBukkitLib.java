@@ -22,7 +22,11 @@ import com.stealthyone.mcb.stbukkitlib.api.Stbl;
 import com.stealthyone.mcb.stbukkitlib.backend.autosaving.AutosaveBackend;
 import com.stealthyone.mcb.stbukkitlib.backend.hooks.HookManager;
 import com.stealthyone.mcb.stbukkitlib.backend.players.PlayerIdManager;
+import com.stealthyone.mcb.stbukkitlib.commands.CmdStbl;
 import com.stealthyone.mcb.stbukkitlib.config.ConfigHelper;
+import com.stealthyone.mcb.stbukkitlib.lib.autosaving.Autosavable;
+import com.stealthyone.mcb.stbukkitlib.lib.help.HelpManager;
+import com.stealthyone.mcb.stbukkitlib.lib.updating.UpdateChecker;
 import com.stealthyone.mcb.stbukkitlib.listeners.PlayerListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,7 +34,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class StBukkitLib extends JavaPlugin {
+public class StBukkitLib extends JavaPlugin implements Autosavable {
 
     public static class Log {
 
@@ -63,6 +67,9 @@ public class StBukkitLib extends JavaPlugin {
 
     private Logger logger;
 
+    private HelpManager helpManager;
+    private UpdateChecker updateChecker;
+
     @Override
     public void onLoad() {
         logger = Bukkit.getLogger();
@@ -76,15 +83,21 @@ public class StBukkitLib extends JavaPlugin {
         getConfig().options().copyDefaults(false);
         saveConfig();
 
-        /* Setup important plugin components */
+        /* Setup library */
         Stbl.autosaving = new AutosaveBackend(this);
         Stbl.hooks = new HookManager(this);
         Stbl.playerIds = new PlayerIdManager(this);
 
-        //Stbl.autosaving.registerAutosavable(this, "main", this, );
+        /* Setup important plugin components */
+        helpManager = new HelpManager(this);
+        Stbl.autosaving.registerAutosavable(this, this);
+        updateChecker = UpdateChecker.scheduleForMe(this, 66225);
 
         /* Register listeners */
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
+
+        /* Register commands */
+        getCommand("stbl").setExecutor(new CmdStbl(this));
 
         Log.info(String.format("%s v%s by Stealth2800 enabled.", getName(), getDescription().getVersion()));
     }
@@ -95,8 +108,17 @@ public class StBukkitLib extends JavaPlugin {
         Log.info(String.format("%s v%s by Stealth2800 disabled.", getName(), getDescription().getVersion()));
     }
 
+    @Override
     public void saveAll() {
         Stbl.playerIds.saveFile();
+    }
+
+    public HelpManager getHelpManager() {
+        return helpManager;
+    }
+
+    public UpdateChecker getUpdateChecker() {
+        return updateChecker;
     }
 
 }
