@@ -62,7 +62,7 @@ public class BetterSign {
     }
 
     public Sign getSign() {
-        return SignUtils.getSign(getLocation().getBlock());
+        return currentSign != null ? currentSign : SignUtils.getSign(getLocation().getBlock());
     }
 
     public BlockFace getFacing() {

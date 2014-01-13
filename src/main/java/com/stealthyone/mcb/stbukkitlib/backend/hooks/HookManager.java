@@ -39,6 +39,7 @@ public class HookManager {
         registerHook(new VanishNoPacketHook());
         registerHook(new VaultHook());
         registerHook(new InSignsHook());
+        registerHook(new WorldEditHook());
     }
 
     public boolean registerHook(PluginHook hook) {
@@ -106,6 +107,10 @@ public class HookManager {
 
     public VaultHook getVault() {
         return (VaultHook) getHook("Vault");
+    }
+
+    public WorldEditHook getWorldEdit() {
+        return (WorldEditHook) getHook("WorldEdit");
     }
 
 }

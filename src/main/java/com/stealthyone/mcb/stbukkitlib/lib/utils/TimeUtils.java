@@ -75,13 +75,13 @@ public class TimeUtils {
                 returnString.append(Integer.toString(hours).length() == 1 ? "0" : "" + hours);
             }
 
-            if (hours > 0)
-                returnString.append(":");
-            returnString.append(Integer.toString(minutes).length() == 1 ? "0" : "" + minutes);
+            if (hours > 0) {
+                returnString.append(":").append(Integer.toString(minutes).length() == 1 ? "0" : "").append(minutes);
+            } else {
+                returnString.append(minutes);
+            }
 
-            if (minutes > 0)
-                returnString.append(":");
-            returnString.append(Integer.toString(seconds).length() == 1 ? "0" : "" + seconds);
+            returnString.append(":").append(Integer.toString(seconds).length() == 1 ? "0" : "").append(seconds);
         }
 
         return returnString.toString();

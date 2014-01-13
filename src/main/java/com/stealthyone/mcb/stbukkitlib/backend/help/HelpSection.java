@@ -1,8 +1,11 @@
 package com.stealthyone.mcb.stbukkitlib.backend.help;
 
+import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
 import com.stealthyone.mcb.stbukkitlib.lib.help.HelpManager;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,22 +25,25 @@ public class HelpSection {
         this.config = new SectionConfig(config);
 
         /* Load topic */
-        topic = (parent != null ? parent.topic + "." : "") + config.getName();
+        topic = (parent != null && parent.topic.length() > 0 ? parent.topic + "." : "") + config.getName();
+        Log.debug("topic: " + topic);
 
         /* Load messages */
         messages = config.getStringList("messages");
-        if (messages.size() == 0) {
-            messages.add(this.config.emptyMessage);
-        }
 
         /* Load subtopics */
-        ConfigurationSection subtopicSec = config.getConfigurationSection("Subtopics");
+        ConfigurationSection subtopicSec = config instanceof FileConfiguration ? config : config.getConfigurationSection("subtopics");
         if (subtopicSec != null) {
+            Log.debug("Subtopic section not null");
             for (String key : subtopicSec.getKeys(false)) {
+                Log.debug("key: " + key);
                 HelpSection section = new HelpSection(manager, this, subtopicSec.getConfigurationSection(key));
                 manager.addHelpSection(section.topic, section);
                 messages.add(this.config.topicMessage.replace("{TOPIC}", section.topic).replace("{DESCRIPTION}", section.config.description));
             }
+        }
+        if (messages.size() == 0) {
+            messages.add(this.config.emptyMessage);
         }
     }
 
@@ -68,11 +74,11 @@ public class HelpSection {
     }
 
     public String constructHeader(String topic, int page, int maxPages) {
-        return config.header.replace("{TOPIC}", topic).replace("{PAGE}", Integer.toString(page)).replace("{PAGECOUNT}", Integer.toString(maxPages));
+        return ChatColor.translateAlternateColorCodes('&', config.header.replace("{TOPIC}", topic).replace("{PAGE}", Integer.toString(page)).replace("{PAGECOUNT}", Integer.toString(maxPages)));
     }
 
     public String constructFooter(String topic, int page, int maxPages) {
-        return config.footer.replace("{TOPIC}", topic).replace("{PAGE}", Integer.toString(page)).replace("{PAGECOUNT}", Integer.toString(maxPages));
+        return ChatColor.translateAlternateColorCodes('&', config.footer.replace("{TOPIC}", topic).replace("{PAGE}", Integer.toString(page)).replace("{PAGECOUNT}", Integer.toString(maxPages)));
     }
 
 }

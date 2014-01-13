@@ -16,19 +16,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.stealthyone.mcb.stbukkitlib.backend.hooks;
+package com.stealthyone.mcb.stbukkitlib.lib.utils;
 
-import de.blablubbabc.insigns.Changer;
-import de.blablubbabc.insigns.InSigns;
+import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
+import org.bukkit.Bukkit;
 
-public class InSignsHook extends PluginHook {
+public class InternalClassUtils {
 
-    public InSignsHook() {
-        super("InSigns");
+    public static String getNMSPackageName() {
+        return "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
     }
 
-    public void addChanger(Changer changer) {
-        ((InSigns) getPlugin()).addChanger(changer);
+    public static Class getClass(String name) {
+        try {
+            return Class.forName(name);
+        } catch (ClassNotFoundException ex) {
+            Log.warning("Unable to find class: '" + name + "'");
+            return null;
+        }
+    }
+
+    public static Class getNMSClass(String name) {
+        return getClass(getNMSPackageName() + "." + name);
     }
 
 }

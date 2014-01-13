@@ -18,7 +18,9 @@
  */
 package com.stealthyone.mcb.stbukkitlib.lib.utils;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 
 public class ChatColorUtils {
 
@@ -41,6 +43,45 @@ public class ChatColorUtils {
 
     public static String magicfyMessage(String message) {
         return message.replace("&k", ChatColor.MAGIC.toString());
+    }
+
+    public static ChatColor translateDyeColor(DyeColor color) {
+        Validate.notNull(color, "Color cannot be null");
+
+        switch (color) {
+            case WHITE:
+                return ChatColor.WHITE;
+            case ORANGE:
+                return ChatColor.GOLD;
+            case MAGENTA:
+                return ChatColor.LIGHT_PURPLE;
+            case LIGHT_BLUE:
+                return ChatColor.AQUA;
+            case YELLOW:
+                return ChatColor.YELLOW;
+            case LIME:
+                return ChatColor.GREEN;
+            case PINK:
+                return ChatColor.LIGHT_PURPLE;
+            case GRAY:
+                return ChatColor.GRAY;
+            case SILVER:
+                return ChatColor.GRAY;
+            case CYAN:
+                return ChatColor.DARK_AQUA;
+            case PURPLE:
+                return ChatColor.DARK_PURPLE;
+            case BLUE:
+                return ChatColor.BLUE;
+            case BROWN:
+                return ChatColor.GOLD;
+            case GREEN:
+                return ChatColor.DARK_GREEN;
+            case RED:
+                return ChatColor.RED;
+            default: case BLACK:
+                return ChatColor.BLACK;
+        }
     }
 
 }

@@ -1,15 +1,14 @@
 package com.stealthyone.mcb.stbukkitlib.lib.help;
 
+import com.stealthyone.mcb.stbukkitlib.StBukkitLib.Log;
 import com.stealthyone.mcb.stbukkitlib.backend.help.HelpSection;
-import com.stealthyone.mcb.stbukkitlib.lib.storage.YamlFileManager;
-import com.stealthyone.mcb.stbukkitlib.lib.utils.FileUtils;
+import com.stealthyone.mcb.stbukkitlib.lib.storage.JarYamlFileManager;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ public class HelpManager {
 
     private JavaPlugin plugin;
 
-    private YamlFileManager helpFile;
+    private JarYamlFileManager helpFile;
     private Map<String, HelpSection> helpSections = new HashMap<>();
 
     public HelpManager(JavaPlugin plugin) {
@@ -29,21 +28,20 @@ public class HelpManager {
         Validate.notNull(fileName, "File name cannot be null");
 
         this.plugin = plugin;
-        helpFile = new YamlFileManager(plugin.getDataFolder() + File.separator + "help.yml");
-        if (helpFile.isEmpty()) {
-            try {
-                FileUtils.copyFileFromJar(plugin, "help.yml");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            helpFile.reloadConfig();
+        try {
+            helpFile = new JarYamlFileManager(plugin, "help.yml");
+        } catch (FileNotFoundException ex) {
+            Log.severe("Unable to load help for plugin: " + plugin.getName());
+            ex.printStackTrace();
+            return;
         }
         reloadHelp();
+        Log.debug("Plugin: " + plugin.getName() + " help sections -> " + helpSections.keySet().toString());
+        Log.info("Help loaded for plugin: " + plugin.getName());
     }
 
     public void reloadHelp() {
         helpSections.clear();
-        helpFile.reloadConfig();
         addHelpSection(null, new HelpSection(this, null, helpFile.getConfig()));
     }
 
@@ -66,32 +64,57 @@ public class HelpManager {
     }
 
     public void handleHelpCommand(CommandSender sender, String label, String[] args, String baseTopic, int startIndex) {
-        String finalTopic = baseTopic != null ? baseTopic : "";
-        try {
-            finalTopic = finalTopic + "." + args[startIndex];
-        } catch (IndexOutOfBoundsException ex) {
-            if (finalTopic.length() == 0) finalTopic = "(none)";
-        }
+        Log.debug("Handle help command for " + sender.getName() + ", label: " + label + ", baseTopic: " + baseTopic + ", startIndex: " + startIndex);
 
         int page = 1;
+        /* Get customTopic */
+        String customTopic = null;
         try {
-            page = Integer.parseInt(args[args.length - 1]);
-        } catch (IndexOutOfBoundsException ex) {
+            String temp = args[startIndex];
+            try {
+                page = Integer.parseInt(temp);
+            } catch (NumberFormatException ex) {
+                customTopic = args[startIndex];
+            }
+        } catch (IndexOutOfBoundsException ex) {}
+        Log.debug("customTopic: " + customTopic);
 
+        /* Create finalTopic */
+        String finalTopic;
+        if (baseTopic == null && customTopic == null) {
+            finalTopic = "(none)";
+        } else if (baseTopic != null && customTopic == null) {
+            finalTopic = baseTopic;
+        } else if (baseTopic == null) {
+            finalTopic = customTopic;
+        } else {
+            finalTopic = baseTopic + "." + customTopic;
+        }
+        Log.debug("finalTopic: " + finalTopic);
+
+        /* Get page */
+        try {
+            page = Integer.parseInt(args[startIndex + 1]);
+        } catch (IndexOutOfBoundsException ex) {
         } catch (NumberFormatException ex) {
             if (startIndex < args.length) {
                 handleHelpCommand(sender, label, args, finalTopic, startIndex + 1);
                 return;
             }
         }
+        Log.debug("page: " + page);
 
         HelpSection section = helpSections.get(finalTopic.toLowerCase());
         if (section == null) {
-            sender.sendMessage(ChatColor.RED + "Invalid help topic: " + finalTopic);
+            sender.sendMessage(ChatColor.RED + "Invalid help topic: " + ChatColor.DARK_RED + finalTopic);
         } else {
             int pageCount = section.getPageCount();
+            if (page <= 0 || page > pageCount) {
+                sender.sendMessage(ChatColor.RED + "Invalid page");
+                return;
+            }
 
-            sender.sendMessage(section.constructHeader(finalTopic, page, pageCount));
+            sender.sendMessage(section.constructHeader(finalTopic.equalsIgnoreCase("(none)") ? plugin.getName() : finalTopic, page, pageCount));
             for (String string : section.constructMessages(sender, label, page)) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', string));
             }

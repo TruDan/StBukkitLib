@@ -47,6 +47,7 @@ public abstract class PluginHook {
             Log.warning("Unable to hook with plugin: '" + plugin.getName() + "' -> plugin is not enabled.");
         }
     }
+
     public JavaPlugin getPlugin() {
         return (JavaPlugin) Bukkit.getPluginManager().getPlugin(name);
     }
