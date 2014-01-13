@@ -1,7 +1,7 @@
 /*
- * StBukkitLib - Set of useful Bukkit-related classes
+ * StBukkitLib
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- * Website: <http://google.com/>
+ * Website: <http://stealthyone.com/bukkit>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,18 +19,22 @@
 package com.stealthyone.mcb.stbukkitlib.lib.messages;
 
 import com.stealthyone.mcb.stbukkitlib.lib.storage.YamlFileManager;
-import com.stealthyone.mcb.stbukkitlib.lib.utils.FileUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MessageManager {
 
     private JavaPlugin plugin;
     private YamlFileManager messageFile;
+
+    private Map<String, Map<String, String>> messages = new HashMap<>();
 
     public MessageManager(JavaPlugin plugin) {
         this(plugin, "messages.yml");
@@ -40,19 +44,27 @@ public class MessageManager {
         this.plugin = plugin;
         messageFile = new YamlFileManager(plugin.getDataFolder() + File.separator + fileName);
         if (messageFile.isEmpty()) {
-            try {
-                FileUtils.copyFileFromJar(plugin, fileName);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            messageFile.reloadConfig();
+            plugin.saveResource(fileName, true);
         } else {
             messageFile.copyDefaults(YamlConfiguration.loadConfiguration(plugin.getResource(fileName)));
         }
+        reloadMessages();
     }
 
     public void reloadMessages() {
         messageFile.reloadConfig();
+        messages.clear();
+
+        FileConfiguration config = messageFile.getConfig();
+        for (String key : config.getKeys(false)) {
+            if (key.equals("tag") || !(config.get(key) instanceof List)) continue;
+
+            Map<String, String> secMessages = new HashMap<>();
+            for (String messageName : config.getConfigurationSection(key).getKeys(false)) {
+                secMessages.put(messageName, config.getString(messageName));
+            }
+            messages.put(key, secMessages);
+        }
     }
 
     public String getTag() {
@@ -60,7 +72,7 @@ public class MessageManager {
     }
 
     public String getTag(boolean raw) {
-        String tag = messageFile.getConfig().getString("TAG", "&6[{PLUGINNAME}] ");
+        String tag = messageFile.getConfig().getString("tag", "&6[{PLUGINNAME}] ");
         return raw ? tag : ChatColor.translateAlternateColorCodes('&', tag.replace("{PLUGINNAME}", plugin.getName()));
     }
 
@@ -78,7 +90,13 @@ public class MessageManager {
     }
 
     public String getMessage(String name, String... replacements) {
-        String message = messageFile.getConfig().getString(name);
+        String[] nameSplit = name.split(".");
+        String message;
+        try {
+            message = messages.get(nameSplit[0]).get(nameSplit[1]);
+        } catch (NullPointerException ex) {
+            message = null;
+        }
         return message == null ? ChatColor.RED + "Undefined message '" + name + "'" : ChatColor.translateAlternateColorCodes('&', String.format(message, replacements)).replace("{TAG}", getTag());
     }
 

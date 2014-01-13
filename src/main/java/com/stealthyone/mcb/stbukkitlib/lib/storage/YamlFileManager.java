@@ -1,7 +1,7 @@
 /*
- * StBukkitLib - Set of useful Bukkit-related classes
+ * StBukkitLib
  * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
- * Website: <http://google.com/>
+ * Website: <http://stealthyone.com/bukkit>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,13 +31,15 @@ public class YamlFileManager {
     private FileConfiguration config;
 
     public YamlFileManager(String filePath) {
-        Validate.notNull(filePath);
+        Validate.notNull(filePath, "FilePath cannot be null");
+
         file = new File(filePath);
         reloadConfig();
     }
 
     public YamlFileManager(File file) {
-        Validate.notNull(file);
+        Validate.notNull(file, "File cannot be null");
+
         this.file = file;
         reloadConfig();
     }
@@ -70,11 +72,17 @@ public class YamlFileManager {
         return config;
     }
 
+    public File getFile() {
+        return file;
+    }
+
     public boolean isEmpty() {
         return config.getKeys(false).size() == 0;
     }
 
     public void copyDefaults(FileConfiguration otherConfig) {
+        Validate.notNull(otherConfig, "OtherConfig cannot be null");
+
         config.addDefaults(otherConfig);
         config.options().copyDefaults(true);
         saveFile();

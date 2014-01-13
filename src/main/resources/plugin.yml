@@ -1,11 +1,11 @@
 name: ${project.name}
 version: ${project.version}
-description: Set of useful Bukkit-related classes
+description: Library of useful classes for Bukkit plugin development purposes
 depend: []
-softdepend: [WorldEdit, WorldGuard, VanishNoPacket, Vault]
+softdepend: []
 author: Stealth2800
 website: http://stealthyone.com/bukkit
 main: com.stealthyone.mcb.stbukkitlib.StBukkitLib
 commands:
-  stbl:
-    aliases: [stbukkitlib, sbl, stlib]
+  stbukkitlib:
+    aliases: [stbl]
