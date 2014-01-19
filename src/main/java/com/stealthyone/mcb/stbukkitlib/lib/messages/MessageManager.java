@@ -31,10 +31,10 @@ import java.util.Map;
 
 public class MessageManager {
 
-    private JavaPlugin plugin;
-    private YamlFileManager messageFile;
+    protected JavaPlugin plugin;
+    protected YamlFileManager messageFile;
 
-    private Map<String, Map<String, String>> messages = new HashMap<>();
+    protected Map<String, Map<String, String>> messages = new HashMap<>();
 
     public MessageManager(JavaPlugin plugin) {
         this(plugin, "messages.yml");
