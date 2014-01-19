@@ -3,6 +3,9 @@ package com.stealthyone.mcb.stbukkitlib.lib.utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LocationUtils {
 
     public static String locationToString(Location location, boolean ignoreYawPitch) {
@@ -32,6 +35,22 @@ public class LocationUtils {
                     Double.parseDouble(split[3])
             );
         }
+    }
+
+    public static List<String> locationListToStringList(List<Location> locList, boolean ignoreYawPitch) {
+        List<String> stringList = new ArrayList<>();
+        for (Location location : locList) {
+            stringList.add(locationToString(location, ignoreYawPitch));
+        }
+        return stringList;
+    }
+
+    public static List<Location> stringListToLocationList(List<String> stringList) {
+        List<Location> locList = new ArrayList<>();
+        for (String rawLoc : stringList) {
+            locList.add(stringToLocation(rawLoc));
+        }
+        return locList;
     }
 
 }
