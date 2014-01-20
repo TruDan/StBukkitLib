@@ -1,6 +1,6 @@
 /*
  * StBukkitLib
- * Copyright (C) 2013 Stealth2800 <stealth2800@stealthyone.com>
+ * Copyright (C) 2014 Stealth2800 <stealth2800@stealthyone.com>
  * Website: <http://stealthyone.com/bukkit>
  *
  * This program is free software: you can redistribute it and/or modify
