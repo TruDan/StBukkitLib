@@ -27,6 +27,12 @@
         </dependency>
     </dependencies>
 
+    <scm>
+        <connection>scm:git:git://github.com/TruDan/StBukkitLib.git</connection>
+        <developerConnection>scm:git:git@github.com:TruDan/StBukkitLib.git</developerConnection>
+        <url>https://github.com/TruDan/StBukkitLib</url>
+    </scm>
+
     <build>
         <resources>
             <resource>
